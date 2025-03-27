@@ -1,18 +1,16 @@
-
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Star, Users, Award, Clock } from 'lucide-react';
-
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
-  
   useEffect(() => {
     setIsVisible(true);
   }, []);
-  
   return <div className="page-transition">
       {/* Hero Section */}
-      <section className="bg-cover bg-center h-screen flex items-center relative" style={{ backgroundImage: "url('/lovable-uploads/6b5ed8ec-5bec-4861-8cdf-988efc7874eb.png')" }}>
+      <section className="bg-cover bg-center h-screen flex items-center relative" style={{
+      backgroundImage: "url('/lovable-uploads/6b5ed8ec-5bec-4861-8cdf-988efc7874eb.png')"
+    }}>
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="container-custom relative z-10">
           <div className={`max-w-3xl transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}>
@@ -52,9 +50,7 @@ const Home = () => {
               <h2 className="heading-lg mb-6">
                 Традиционный паб с <span className="text-pub-green">современным подходом</span>
               </h2>
-              <p className="text-muted-foreground mb-6">
-                Паб "Убежище" обслуживает посетителей в городе Жуковский уже более 5 лет. То, что начиналось как небольшой семейный бизнес, выросло в любимое заведение, сохраняя при этом тепло и характер, которые так полюбились нашим гостям.
-              </p>
+              <p className="text-muted-foreground mb-6">The Refuge Pub обслуживает посетителей в городе Жуковский уже более 3 лет. То, что начиналось как небольшой семейный бизнес, выросло в любимое заведение, сохраняя при этом тепло и характер, которые так полюбились нашим гостям.</p>
               <p className="text-muted-foreground mb-8">
                 Мы гордимся нашим широким выбором крафтового пива, премиальных спиртных напитков и вкусной, сытной пабной еды, приготовленной из местных ингредиентов.
               </p>
@@ -68,7 +64,7 @@ const Home = () => {
               <div className="relative">
                 <img src="/lovable-uploads/92fca82d-8276-42dd-aadf-006c766e3f8f.png" alt="Интерьер паба Убежище" className="rounded-lg shadow-lg w-full h-auto object-cover" />
                 <div className="absolute -bottom-6 -left-6 bg-pub-green text-white p-4 rounded shadow-lg hidden md:block">
-                  <p className="font-playfair text-2xl font-bold">5+</p>
+                  <p className="font-playfair text-2xl font-bold">3+</p>
                   <p className="text-sm">Лет отличного сервиса</p>
                 </div>
               </div>
@@ -252,5 +248,4 @@ const Home = () => {
       </section>
     </div>;
 };
-
 export default Home;
