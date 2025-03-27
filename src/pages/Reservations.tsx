@@ -126,7 +126,7 @@ const Reservations = () => {
               <div className="md:col-span-1 animate-fade-up" style={{
               animationDelay: '0.2s'
             }}>
-                <div className="bg-white dark:bg-pub-dark rounded-xl shadow-lg p-6 border border-border sticky top-24">
+                <div className="rounded-xl shadow-lg p-6 border border-border sticky top-24 bg-zinc-400">
                   <h2 className="text-2xl font-playfair font-semibold mb-6">Детали бронирования</h2>
                   
                   <div className="space-y-6">
@@ -189,7 +189,7 @@ const Reservations = () => {
               <div className="md:col-span-2 animate-fade-up" style={{
               animationDelay: '0.4s'
             }}>
-                <div className="bg-white dark:bg-pub-dark rounded-xl shadow-lg p-6 border border-border mb-8">
+                <div className="rounded-xl shadow-lg p-6 border border-border mb-8 bg-zinc-400">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-2xl font-playfair font-semibold">Выберите стол</h2>
                     <div className="flex items-center space-x-4">
@@ -205,7 +205,7 @@ const Reservations = () => {
                   </div>
                   
                   {/* Карта столов */}
-                  <div className="border border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 mb-6 relative bg-gray-50 dark:bg-gray-900 min-h-[400px]">
+                  <div className="border border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 mb-6 relative min-h-[400px] bg-zinc-400">
                     <div className="absolute top-4 left-4 p-2 bg-pub-green/10 rounded text-sm">
                       <span className="font-medium">План паба</span>
                     </div>
