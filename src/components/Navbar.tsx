@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, MessageCircle } from 'lucide-react';
@@ -27,7 +28,7 @@ const Navbar = () => {
         <Link to="/" className="flex items-center gap-2">
           <img src="/lovable-uploads/71cd3d36-61f2-4833-8278-3d019aa667fa.png" alt="Логотип The Refuge Pub" className="h-10 w-10" />
           <span className="text-2xl font-playfair font-bold text-white">
-            Паб <span className="text-pub-green">"Убежище"</span>
+            <span className="text-pub-green">The Refuge Pub</span>
           </span>
         </Link>
         

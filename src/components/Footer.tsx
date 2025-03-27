@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
 const Footer = () => {
@@ -8,7 +9,7 @@ const Footer = () => {
             <div className="flex items-center mb-6">
               <img src="/lovable-uploads/71cd3d36-61f2-4833-8278-3d019aa667fa.png" alt="Логотип The Refuge Pub" className="h-12 w-12 mr-3" />
               <h3 className="text-2xl font-playfair font-bold">
-                Паб <span className="text-pub-green">"Убежище"</span>
+                <span className="text-pub-green">The Refuge Pub</span>
               </h3>
             </div>
             <p className="text-sm text-gray-300 mb-6">
@@ -114,7 +115,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Паб «Убежище». Все права защищены.</p>
+          <p>&copy; {new Date().getFullYear()} The Refuge Pub. Все права защищены.</p>
         </div>
       </div>
     </footer>;
