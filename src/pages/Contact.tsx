@@ -1,8 +1,6 @@
-
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send, MessageCircle } from 'lucide-react';
 import { toast } from "@/components/ui/use-toast";
-
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -11,22 +9,26 @@ const Contact = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const {
+      name,
+      value
+    } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Имитация отправки формы
     setTimeout(() => {
       toast({
         title: "Сообщение отправлено",
         description: "Спасибо за ваше сообщение. Мы свяжемся с вами в ближайшее время!",
-        duration: 5000,
+        duration: 5000
       });
       setFormData({
         name: '',
@@ -37,9 +39,7 @@ const Contact = () => {
       setIsSubmitting(false);
     }, 1500);
   };
-
-  return (
-    <div className="page-transition pt-24">
+  return <div className="page-transition pt-24 bg-zinc-400">
       {/* Contact Hero */}
       <section className="bg-hero bg-cover bg-center py-24">
         <div className="container-custom">
@@ -59,7 +59,9 @@ const Contact = () => {
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Information */}
-            <div className="animate-fade-up" style={{ animationDelay: '0.2s' }}>
+            <div className="animate-fade-up" style={{
+            animationDelay: '0.2s'
+          }}>
               <div className="mb-10">
                 <div className="flex items-center mb-4">
                   <div className="h-0.5 w-12 bg-pub-green mr-4"></div>
@@ -131,7 +133,9 @@ const Contact = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="animate-fade-up" style={{ animationDelay: '0.4s' }}>
+            <div className="animate-fade-up" style={{
+            animationDelay: '0.4s'
+          }}>
               <div className="bg-white dark:bg-pub-dark rounded-xl shadow-lg p-8 border border-border">
                 <h3 className="text-2xl font-playfair font-semibold mb-6">Отправьте нам сообщение</h3>
                 
@@ -140,78 +144,34 @@ const Contact = () => {
                     <label htmlFor="name" className="block mb-2 text-sm font-medium">
                       Ваше имя
                     </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="input-field"
-                      placeholder="Иван Иванов"
-                      required
-                    />
+                    <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} className="input-field" placeholder="Иван Иванов" required />
                   </div>
                   
                   <div>
                     <label htmlFor="email" className="block mb-2 text-sm font-medium">
                       Ваш Email
                     </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="input-field"
-                      placeholder="ivan@example.com"
-                      required
-                    />
+                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="input-field" placeholder="ivan@example.com" required />
                   </div>
                   
                   <div>
                     <label htmlFor="subject" className="block mb-2 text-sm font-medium">
                       Тема
                     </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      className="input-field"
-                      placeholder="Чем мы можем помочь?"
-                      required
-                    />
+                    <input type="text" id="subject" name="subject" value={formData.subject} onChange={handleChange} className="input-field" placeholder="Чем мы можем помочь?" required />
                   </div>
                   
                   <div>
                     <label htmlFor="message" className="block mb-2 text-sm font-medium">
                       Сообщение
                     </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={5}
-                      className="input-field resize-none"
-                      placeholder="Ваше сообщение..."
-                      required
-                    ></textarea>
+                    <textarea id="message" name="message" value={formData.message} onChange={handleChange} rows={5} className="input-field resize-none" placeholder="Ваше сообщение..." required></textarea>
                   </div>
                   
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="btn-primary w-full flex items-center justify-center"
-                  >
-                    {isSubmitting ? (
-                      <span className="animate-pulse">Отправка...</span>
-                    ) : (
-                      <>
+                  <button type="submit" disabled={isSubmitting} className="btn-primary w-full flex items-center justify-center">
+                    {isSubmitting ? <span className="animate-pulse">Отправка...</span> : <>
                         Отправить сообщение <Send className="ml-2 h-4 w-4" />
-                      </>
-                    )}
+                      </>}
                   </button>
                 </form>
               </div>
@@ -221,7 +181,7 @@ const Contact = () => {
       </section>
 
       {/* Map Section */}
-      <section className="section-padding bg-secondary dark:bg-slate-900">
+      <section className="section-padding bg-zinc-400">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-up">
             <div className="flex items-center justify-center mb-4">
@@ -235,21 +195,15 @@ const Contact = () => {
             </p>
           </div>
           
-          <div className="rounded-xl overflow-hidden shadow-lg h-[400px] lg:h-[500px] animate-fade-up" style={{ animationDelay: '0.4s' }}>
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2261.904688937217!2d38.12163287638918!3d55.59311997297246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x414a989ebc6470d7%3A0x91c6d8fa5436b833!2z0J_QsNCxINCS0LDRgNCw0L0!5e0!3m2!1sru!2sru!4v1710702323012!5m2!1sru!2sru" 
-              width="100%" 
-              height="100%" 
-              style={{ border: 0 }} 
-              allowFullScreen 
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+          <div className="rounded-xl overflow-hidden shadow-lg h-[400px] lg:h-[500px] animate-fade-up" style={{
+          animationDelay: '0.4s'
+        }}>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2261.904688937217!2d38.12163287638918!3d55.59311997297246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x414a989ebc6470d7%3A0x91c6d8fa5436b833!2z0J_QsNCxINCS0LDRgNCw0L0!5e0!3m2!1sru!2sru!4v1710702323012!5m2!1sru!2sru" width="100%" height="100%" style={{
+            border: 0
+          }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default Contact;
