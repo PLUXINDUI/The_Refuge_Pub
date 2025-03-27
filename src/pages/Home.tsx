@@ -54,7 +54,9 @@ const Home = () => {
               <p className="text-muted-foreground mb-8">
                 Мы гордимся нашим широким выбором крафтового пива, премиальных спиртных напитков и вкусной, сытной пабной еды, приготовленной из местных ингредиентов.
               </p>
-              
+              <Link to="/about" className="group inline-flex items-center text-pub-green font-medium hover:underline">
+                Узнать больше <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </div>
             <div className="order-1 md:order-2 animate-fade-up" style={{
             animationDelay: '0.4s'
