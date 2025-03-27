@@ -49,10 +49,7 @@ const Navbar = () => {
           <Link to="/login" className={`nav-link text-white ${isActive('/login')}`}>
             Вход
           </Link>
-          <a href="https://t.me/refuge_pub" target="_blank" rel="noopener noreferrer" className="flex items-center text-white bg-pub-green px-3 py-2 rounded-md ml-2 hover:bg-opacity-80 transition-colors">
-            <MessageCircle className="h-4 w-4 mr-2" />
-            Telegram
-          </a>
+          
         </nav>
         
         <button className="md:hidden text-white" onClick={toggleMenu} aria-label="Переключить меню">
