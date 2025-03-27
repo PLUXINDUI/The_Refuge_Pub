@@ -1,17 +1,12 @@
-
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Star, Users, Award, Clock } from 'lucide-react';
-
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
-
   useEffect(() => {
     setIsVisible(true);
   }, []);
-
-  return (
-    <div className="page-transition">
+  return <div className="page-transition">
       {/* Hero Section */}
       <section className="bg-hero bg-cover bg-center h-screen flex items-center relative">
         <div className="absolute inset-0 bg-black/30"></div>
@@ -37,10 +32,12 @@ const Home = () => {
       </section>
 
       {/* About Preview Section */}
-      <section className="section-padding">
+      <section className="section-padding bg-zinc-600">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-center">
-            <div className="order-2 md:order-1 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+            <div className="order-2 md:order-1 animate-fade-up" style={{
+            animationDelay: '0.2s'
+          }}>
               <div className="flex items-center mb-4">
                 <div className="h-0.5 w-12 bg-pub-gold mr-4"></div>
                 <span className="text-pub-gold uppercase text-sm font-medium tracking-wider">About Us</span>
@@ -58,13 +55,11 @@ const Home = () => {
                 Learn More <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
-            <div className="order-1 md:order-2 animate-fade-up" style={{ animationDelay: '0.4s' }}>
+            <div className="order-1 md:order-2 animate-fade-up" style={{
+            animationDelay: '0.4s'
+          }}>
               <div className="relative">
-                <img 
-                  src="/images/pub-interior.jpg" 
-                  alt="The Refuge Pub Interior" 
-                  className="rounded-lg shadow-lg w-full h-auto object-cover"
-                />
+                <img src="/images/pub-interior.jpg" alt="The Refuge Pub Interior" className="rounded-lg shadow-lg w-full h-auto object-cover" />
                 <div className="absolute -bottom-6 -left-6 bg-pub-gold text-white p-4 rounded shadow-lg hidden md:block">
                   <p className="font-playfair text-2xl font-bold">25+</p>
                   <p className="text-sm">Years of Excellence</p>
@@ -78,7 +73,9 @@ const Home = () => {
       {/* Features Section */}
       <section className="section-padding bg-pub-dark text-white">
         <div className="container-custom">
-          <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+          <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-up" style={{
+          animationDelay: '0.2s'
+        }}>
             <div className="flex items-center justify-center mb-4">
               <div className="h-0.5 w-12 bg-pub-gold mr-4"></div>
               <span className="text-pub-gold uppercase text-sm font-medium tracking-wider">Why Choose Us</span>
@@ -93,7 +90,9 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-pub-dark/50 backdrop-blur-sm p-8 rounded-lg border border-pub-gold/20 transform transition-all duration-500 hover:border-pub-gold hover:shadow-lg animate-fade-up" style={{ animationDelay: '0.3s' }}>
+            <div className="bg-pub-dark/50 backdrop-blur-sm p-8 rounded-lg border border-pub-gold/20 transform transition-all duration-500 hover:border-pub-gold hover:shadow-lg animate-fade-up" style={{
+            animationDelay: '0.3s'
+          }}>
               <Star className="text-pub-gold h-10 w-10 mb-6" />
               <h3 className="text-xl font-playfair font-semibold mb-4">Premium Quality</h3>
               <p className="text-gray-300">
@@ -101,7 +100,9 @@ const Home = () => {
               </p>
             </div>
 
-            <div className="bg-pub-dark/50 backdrop-blur-sm p-8 rounded-lg border border-pub-gold/20 transform transition-all duration-500 hover:border-pub-gold hover:shadow-lg animate-fade-up" style={{ animationDelay: '0.4s' }}>
+            <div className="bg-pub-dark/50 backdrop-blur-sm p-8 rounded-lg border border-pub-gold/20 transform transition-all duration-500 hover:border-pub-gold hover:shadow-lg animate-fade-up" style={{
+            animationDelay: '0.4s'
+          }}>
               <Users className="text-pub-gold h-10 w-10 mb-6" />
               <h3 className="text-xl font-playfair font-semibold mb-4">Warm Atmosphere</h3>
               <p className="text-gray-300">
@@ -109,7 +110,9 @@ const Home = () => {
               </p>
             </div>
 
-            <div className="bg-pub-dark/50 backdrop-blur-sm p-8 rounded-lg border border-pub-gold/20 transform transition-all duration-500 hover:border-pub-gold hover:shadow-lg animate-fade-up" style={{ animationDelay: '0.5s' }}>
+            <div className="bg-pub-dark/50 backdrop-blur-sm p-8 rounded-lg border border-pub-gold/20 transform transition-all duration-500 hover:border-pub-gold hover:shadow-lg animate-fade-up" style={{
+            animationDelay: '0.5s'
+          }}>
               <Award className="text-pub-gold h-10 w-10 mb-6" />
               <h3 className="text-xl font-playfair font-semibold mb-4">Award-Winning</h3>
               <p className="text-gray-300">
@@ -123,7 +126,9 @@ const Home = () => {
       {/* Menu Preview */}
       <section className="section-padding bg-menu bg-fixed bg-cover bg-center">
         <div className="container-custom relative z-10">
-          <div className="max-w-3xl mx-auto text-center mb-16 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+          <div className="max-w-3xl mx-auto text-center mb-16 animate-fade-up" style={{
+          animationDelay: '0.2s'
+        }}>
             <div className="flex items-center justify-center mb-4">
               <div className="h-0.5 w-12 bg-pub-gold mr-4"></div>
               <span className="text-pub-gold uppercase text-sm font-medium tracking-wider">Taste Excellence</span>
@@ -138,7 +143,9 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="glass-card p-8 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+            <div className="glass-card p-8 animate-fade-up" style={{
+            animationDelay: '0.3s'
+          }}>
               <h3 className="text-2xl font-playfair text-white mb-6">Food Menu Highlights</h3>
               
               <div className="menu-item">
@@ -166,7 +173,9 @@ const Home = () => {
               </div>
             </div>
             
-            <div className="glass-card p-8 animate-fade-up" style={{ animationDelay: '0.4s' }}>
+            <div className="glass-card p-8 animate-fade-up" style={{
+            animationDelay: '0.4s'
+          }}>
               <h3 className="text-2xl font-playfair text-white mb-6">Drinks Menu Highlights</h3>
               
               <div className="menu-item">
@@ -195,7 +204,9 @@ const Home = () => {
             </div>
           </div>
           
-          <div className="text-center mt-12 animate-fade-up" style={{ animationDelay: '0.5s' }}>
+          <div className="text-center mt-12 animate-fade-up" style={{
+          animationDelay: '0.5s'
+        }}>
             <Link to="/menu" className="btn-primary">
               View Full Menu
             </Link>
@@ -206,7 +217,9 @@ const Home = () => {
       {/* CTA Section */}
       <section className="section-padding bg-pub-dark">
         <div className="container-custom">
-          <div className="bg-pub-wood text-white p-8 md:p-16 rounded-xl relative overflow-hidden animate-fade-up" style={{ animationDelay: '0.2s' }}>
+          <div className="bg-pub-wood text-white p-8 md:p-16 rounded-xl relative overflow-hidden animate-fade-up" style={{
+          animationDelay: '0.2s'
+        }}>
             <div className="absolute inset-0 bg-black/30"></div>
             <div className="relative z-10 max-w-3xl">
               <h2 className="heading-lg mb-6">
@@ -227,8 +240,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default Home;
