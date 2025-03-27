@@ -182,9 +182,7 @@ const Home = () => {
                 <Link to="/reservations" className="btn-primary">
                   Book a Table
                 </Link>
-                <Link to="/contact" className="btn-outline">
-                  Contact Us
-                </Link>
+                <Link to="/contact" className="btn-outline">Связаться с нами</Link>
               </div>
             </div>
           </div>
