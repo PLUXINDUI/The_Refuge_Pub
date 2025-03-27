@@ -81,15 +81,13 @@ const Home = () => {
         }}>
             <div className="flex items-center justify-center mb-4">
               <div className="h-0.5 w-12 bg-pub-gold mr-4"></div>
-              <span className="text-pub-gold uppercase text-sm font-medium tracking-wider">Taste Excellence</span>
+              
               <div className="h-0.5 w-12 bg-pub-gold ml-4"></div>
             </div>
             <h2 className="heading-lg text-white mb-6">
               Discover Our <span className="text-pub-gold">Menu</span>
             </h2>
-            <p className="text-gray-300">
-              From traditional pub favorites to innovative culinary creations, there's something for everyone at The Refuge Pub.
-            </p>
+            <p className="text-gray-300">В пабе The Refuge найдется что-то для каждого - от традиционных любимых блюд паба до инновационных кулинарных творений.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -157,9 +155,7 @@ const Home = () => {
           <div className="text-center mt-12 animate-fade-up" style={{
           animationDelay: '0.5s'
         }}>
-            <Link to="/menu" className="btn-primary">
-              View Full Menu
-            </Link>
+            <Link to="/menu" className="btn-primary">Полное меню</Link>
           </div>
         </div>
       </section>
@@ -177,9 +173,7 @@ const Home = () => {
               </h2>
               <p className="text-gray-300 mb-8">Закажите столик прямо сейчас и насладитесь теплой атмосферой, исключительной кухней и богатым выбором напитков.</p>
               <div className="flex flex-wrap gap-4">
-                <Link to="/reservations" className="btn-primary">
-                  Book a Table
-                </Link>
+                <Link to="/reservations" className="btn-primary">Заказать столик</Link>
                 <Link to="/contact" className="btn-outline">Связаться с нами</Link>
               </div>
             </div>
