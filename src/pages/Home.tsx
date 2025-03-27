@@ -32,7 +32,7 @@ const Home = () => {
       </section>
 
       {/* About Preview Section */}
-      <section className="section-padding bg-zinc-600">
+      <section className="section-padding bg-slate-100">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-center">
             <div className="order-2 md:order-1 animate-fade-up" style={{
@@ -175,9 +175,7 @@ const Home = () => {
               <h2 className="heading-lg mb-6">
                 Ready for an Unforgettable <span className="text-pub-gold">Pub Experience</span>?
               </h2>
-              <p className="text-gray-300 mb-8">
-                Reserve your table now and enjoy our warm atmosphere, exceptional food, and extensive drink selection.
-              </p>
+              <p className="text-gray-300 mb-8">Закажите столик прямо сейчас и насладитесь теплой атмосферой, исключительной кухней и богатым выбором напитков.</p>
               <div className="flex flex-wrap gap-4">
                 <Link to="/reservations" className="btn-primary">
                   Book a Table
