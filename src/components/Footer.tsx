@@ -6,7 +6,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
             <h3 className="text-2xl font-playfair font-bold mb-6">
-              Паб <span className="text-pub-green">«Убежище»</span>
+              Паб <span className="text-pub-green">The Refuge Pub</span>
             </h3>
             <p className="text-sm text-gray-300 mb-6">
               Место, где традиции встречаются с качеством. Наслаждайтесь нашими тщательно подобранными напитками и вкусной едой в теплой, гостеприимной атмосфере.
