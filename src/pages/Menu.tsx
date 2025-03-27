@@ -1,14 +1,10 @@
-
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
 const Menu = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  return (
-    <div className="page-transition pt-24">
+  return <div className="page-transition pt-24 bg-zinc-400">
       {/* Menu Hero */}
       <section className="bg-menu bg-cover bg-center py-24">
         <div className="container-custom">
@@ -50,7 +46,9 @@ const Menu = () => {
               <p className="text-muted-foreground">Begin your culinary journey with our selection of delicious appetizers.</p>
             </div>
 
-            <div className="space-y-8 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+            <div className="space-y-8 animate-fade-up" style={{
+            animationDelay: '0.2s'
+          }}>
               <div className="menu-item">
                 <div>
                   <h3 className="menu-item-title">Spicy Buffalo Wings</h3>
@@ -96,7 +94,7 @@ const Menu = () => {
       </section>
 
       {/* Main Courses Section */}
-      <section id="mains" className="section-padding bg-secondary">
+      <section id="mains" className="section-padding bg-zinc-400">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
             <div className="mb-12 animate-fade-up">
@@ -108,7 +106,9 @@ const Menu = () => {
               <p className="text-muted-foreground">Satisfying main dishes prepared with care and the finest ingredients.</p>
             </div>
 
-            <div className="space-y-8 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+            <div className="space-y-8 animate-fade-up" style={{
+            animationDelay: '0.2s'
+          }}>
               <div className="menu-item">
                 <div>
                   <h3 className="menu-item-title">Classic Fish & Chips</h3>
@@ -182,7 +182,9 @@ const Menu = () => {
               <p className="text-muted-foreground">Indulge in our delicious homemade desserts to complete your meal.</p>
             </div>
 
-            <div className="space-y-8 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+            <div className="space-y-8 animate-fade-up" style={{
+            animationDelay: '0.2s'
+          }}>
               <div className="menu-item">
                 <div>
                   <h3 className="menu-item-title">Sticky Toffee Pudding</h3>
@@ -220,8 +222,8 @@ const Menu = () => {
       </section>
 
       {/* Beers Section */}
-      <section id="beers" className="section-padding bg-secondary">
-        <div className="container-custom">
+      <section id="beers" className="section-padding bg-zinc-400">
+        <div className="container-custom bg-zinc-400">
           <div className="max-w-4xl mx-auto">
             <div className="mb-12 animate-fade-up">
               <div className="flex items-center mb-4">
@@ -232,7 +234,9 @@ const Menu = () => {
               <p className="text-muted-foreground">Explore our extensive selection of draft beers, craft bottles, and cans.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8 animate-fade-up" style={{
+            animationDelay: '0.2s'
+          }}>
               <div className="menu-item">
                 <div>
                   <h3 className="menu-item-title">Guinness</h3>
@@ -314,7 +318,9 @@ const Menu = () => {
               <p className="text-muted-foreground">Expertly mixed classic and signature cocktails to suit every palate.</p>
             </div>
 
-            <div className="space-y-8 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+            <div className="space-y-8 animate-fade-up" style={{
+            animationDelay: '0.2s'
+          }}>
               <div className="menu-item">
                 <div>
                   <h3 className="menu-item-title">Old Fashioned</h3>
@@ -368,7 +374,7 @@ const Menu = () => {
       </section>
 
       {/* Wines Section */}
-      <section id="wines" className="section-padding bg-secondary">
+      <section id="wines" className="section-padding bg-zinc-400">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
             <div className="mb-12 animate-fade-up">
@@ -380,7 +386,9 @@ const Menu = () => {
               <p className="text-muted-foreground">Carefully selected wines to complement your meal perfectly.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8 animate-fade-up" style={{
+            animationDelay: '0.2s'
+          }}>
               <div>
                 <h3 className="text-xl font-playfair font-semibold text-pub-gold mb-6">Red Wines</h3>
                 
@@ -457,8 +465,6 @@ const Menu = () => {
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default Menu;
