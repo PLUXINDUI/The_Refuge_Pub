@@ -71,57 +71,7 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="section-padding bg-pub-dark text-white">
-        <div className="container-custom">
-          <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-up" style={{
-          animationDelay: '0.2s'
-        }}>
-            <div className="flex items-center justify-center mb-4">
-              <div className="h-0.5 w-12 bg-pub-gold mr-4"></div>
-              <span className="text-pub-gold uppercase text-sm font-medium tracking-wider">Why Choose Us</span>
-              <div className="h-0.5 w-12 bg-pub-gold ml-4"></div>
-            </div>
-            <h2 className="heading-lg mb-6">
-              What Makes <span className="text-pub-gold">The Refuge Pub</span> Special
-            </h2>
-            <p className="text-gray-300">
-              We're more than just a pub. We're a place where memories are made, friends gather, and everyone feels welcome.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-pub-dark/50 backdrop-blur-sm p-8 rounded-lg border border-pub-gold/20 transform transition-all duration-500 hover:border-pub-gold hover:shadow-lg animate-fade-up" style={{
-            animationDelay: '0.3s'
-          }}>
-              <Star className="text-pub-gold h-10 w-10 mb-6" />
-              <h3 className="text-xl font-playfair font-semibold mb-4">Premium Quality</h3>
-              <p className="text-gray-300">
-                We source the finest ingredients and beverages to ensure every visit exceeds your expectations.
-              </p>
-            </div>
-
-            <div className="bg-pub-dark/50 backdrop-blur-sm p-8 rounded-lg border border-pub-gold/20 transform transition-all duration-500 hover:border-pub-gold hover:shadow-lg animate-fade-up" style={{
-            animationDelay: '0.4s'
-          }}>
-              <Users className="text-pub-gold h-10 w-10 mb-6" />
-              <h3 className="text-xl font-playfair font-semibold mb-4">Warm Atmosphere</h3>
-              <p className="text-gray-300">
-                Our friendly staff and cozy environment create the perfect setting for any occasion.
-              </p>
-            </div>
-
-            <div className="bg-pub-dark/50 backdrop-blur-sm p-8 rounded-lg border border-pub-gold/20 transform transition-all duration-500 hover:border-pub-gold hover:shadow-lg animate-fade-up" style={{
-            animationDelay: '0.5s'
-          }}>
-              <Award className="text-pub-gold h-10 w-10 mb-6" />
-              <h3 className="text-xl font-playfair font-semibold mb-4">Award-Winning</h3>
-              <p className="text-gray-300">
-                Recognized for our exceptional food, drinks, and service throughout the Denver area.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       {/* Menu Preview */}
       <section className="section-padding bg-menu bg-fixed bg-cover bg-center">
