@@ -1,15 +1,11 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-  
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -18,28 +14,19 @@ const Navbar = () => {
         setIsScrolled(false);
       }
     };
-
     window.addEventListener('scroll', handleScroll);
-    
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
   const isActive = (path: string) => {
     return location.pathname === path ? 'nav-link-active' : '';
   };
-
-  return (
-    <header 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-pub-dark/90 backdrop-blur-md py-3 shadow-lg' : 'bg-transparent py-5'
-      }`}
-    >
+  return <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-pub-dark/90 backdrop-blur-md py-3 shadow-lg' : 'bg-transparent py-5'}`}>
       <div className="container-custom flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2">
           <span className="text-2xl font-playfair font-bold text-white">
-            Паб <span className="text-pub-green">«Убежище»</span>
+            Паб <span className="text-pub-green">The Refuge  Pub</span>
           </span>
         </Link>
         
@@ -64,70 +51,34 @@ const Navbar = () => {
           </Link>
         </nav>
         
-        <button 
-          className="md:hidden text-white"
-          onClick={toggleMenu}
-          aria-label="Переключить меню"
-        >
-          {isMenuOpen ? (
-            <X className="h-6 w-6" />
-          ) : (
-            <Menu className="h-6 w-6" />
-          )}
+        <button className="md:hidden text-white" onClick={toggleMenu} aria-label="Переключить меню">
+          {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
       
       {/* Мобильное меню */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-pub-dark/95 backdrop-blur-md animate-slide-in">
+      {isMenuOpen && <div className="md:hidden bg-pub-dark/95 backdrop-blur-md animate-slide-in">
           <div className="container-custom py-4 flex flex-col space-y-4">
-            <Link 
-              to="/" 
-              className={`text-white hover:text-pub-green ${isActive('/')}`}
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <Link to="/" className={`text-white hover:text-pub-green ${isActive('/')}`} onClick={() => setIsMenuOpen(false)}>
               Главная
             </Link>
-            <Link 
-              to="/about" 
-              className={`text-white hover:text-pub-green ${isActive('/about')}`}
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <Link to="/about" className={`text-white hover:text-pub-green ${isActive('/about')}`} onClick={() => setIsMenuOpen(false)}>
               О нас
             </Link>
-            <Link 
-              to="/menu" 
-              className={`text-white hover:text-pub-green ${isActive('/menu')}`}
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <Link to="/menu" className={`text-white hover:text-pub-green ${isActive('/menu')}`} onClick={() => setIsMenuOpen(false)}>
               Меню
             </Link>
-            <Link 
-              to="/reservations" 
-              className={`text-white hover:text-pub-green ${isActive('/reservations')}`}
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <Link to="/reservations" className={`text-white hover:text-pub-green ${isActive('/reservations')}`} onClick={() => setIsMenuOpen(false)}>
               Бронирование
             </Link>
-            <Link 
-              to="/contact" 
-              className={`text-white hover:text-pub-green ${isActive('/contact')}`}
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <Link to="/contact" className={`text-white hover:text-pub-green ${isActive('/contact')}`} onClick={() => setIsMenuOpen(false)}>
               Контакты
             </Link>
-            <Link 
-              to="/login" 
-              className={`text-white hover:text-pub-green ${isActive('/login')}`}
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <Link to="/login" className={`text-white hover:text-pub-green ${isActive('/login')}`} onClick={() => setIsMenuOpen(false)}>
               Вход
             </Link>
           </div>
-        </div>
-      )}
-    </header>
-  );
+        </div>}
+    </header>;
 };
-
 export default Navbar;
