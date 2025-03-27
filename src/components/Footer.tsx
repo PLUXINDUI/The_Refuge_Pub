@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
             <h3 className="text-2xl font-playfair font-bold mb-6">
-              Паб <span className="text-pub-gold">«Убежище»</span>
+              Паб <span className="text-pub-green">«Убежище»</span>
             </h3>
             <p className="text-sm text-gray-300 mb-6">
               Место, где традиции встречаются с качеством. Наслаждайтесь нашими тщательно подобранными напитками и вкусной едой в теплой, гостеприимной атмосфере.
@@ -19,7 +19,7 @@ const Footer = () => {
                 href="https://facebook.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-300 hover:text-pub-gold transition-colors duration-300"
+                className="text-gray-300 hover:text-pub-green transition-colors duration-300"
               >
                 <Facebook className="h-5 w-5" />
               </a>
@@ -27,7 +27,7 @@ const Footer = () => {
                 href="https://twitter.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-300 hover:text-pub-gold transition-colors duration-300"
+                className="text-gray-300 hover:text-pub-green transition-colors duration-300"
               >
                 <Twitter className="h-5 w-5" />
               </a>
@@ -35,7 +35,7 @@ const Footer = () => {
                 href="https://instagram.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-300 hover:text-pub-gold transition-colors duration-300"
+                className="text-gray-300 hover:text-pub-green transition-colors duration-300"
               >
                 <Instagram className="h-5 w-5" />
               </a>
@@ -46,15 +46,15 @@ const Footer = () => {
             <h4 className="text-xl font-playfair font-semibold mb-6">Свяжитесь с нами</h4>
             <ul className="space-y-4 text-sm text-gray-300">
               <li className="flex items-start">
-                <MapPin className="h-5 w-5 text-pub-gold mr-3 mt-0.5" />
+                <MapPin className="h-5 w-5 text-pub-green mr-3 mt-0.5" />
                 <span>ул. Восточная, 143, Москва, 123456, Россия</span>
               </li>
               <li className="flex items-center">
-                <Phone className="h-5 w-5 text-pub-gold mr-3" />
+                <Phone className="h-5 w-5 text-pub-green mr-3" />
                 <span>+7 (495) 123-4567</span>
               </li>
               <li className="flex items-center">
-                <Mail className="h-5 w-5 text-pub-gold mr-3" />
+                <Mail className="h-5 w-5 text-pub-green mr-3" />
                 <span>info@pububezhishe.ru</span>
               </li>
             </ul>
@@ -64,21 +64,21 @@ const Footer = () => {
             <h4 className="text-xl font-playfair font-semibold mb-6">Часы работы</h4>
             <ul className="space-y-4 text-sm text-gray-300">
               <li className="flex items-start">
-                <Clock className="h-5 w-5 text-pub-gold mr-3 mt-0.5" />
+                <Clock className="h-5 w-5 text-pub-green mr-3 mt-0.5" />
                 <div>
                   <p className="font-medium">Понедельник - Четверг</p>
                   <p>11:00 - 23:00</p>
                 </div>
               </li>
               <li className="flex items-start">
-                <Clock className="h-5 w-5 text-pub-gold mr-3 mt-0.5" />
+                <Clock className="h-5 w-5 text-pub-green mr-3 mt-0.5" />
                 <div>
                   <p className="font-medium">Пятница - Суббота</p>
                   <p>11:00 - 01:00</p>
                 </div>
               </li>
               <li className="flex items-start">
-                <Clock className="h-5 w-5 text-pub-gold mr-3 mt-0.5" />
+                <Clock className="h-5 w-5 text-pub-green mr-3 mt-0.5" />
                 <div>
                   <p className="font-medium">Воскресенье</p>
                   <p>12:00 - 22:00</p>
@@ -93,7 +93,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/" 
-                  className="text-gray-300 hover:text-pub-gold transition-colors duration-300"
+                  className="text-gray-300 hover:text-pub-green transition-colors duration-300"
                 >
                   Главная
                 </Link>
@@ -101,7 +101,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/about" 
-                  className="text-gray-300 hover:text-pub-gold transition-colors duration-300"
+                  className="text-gray-300 hover:text-pub-green transition-colors duration-300"
                 >
                   О нас
                 </Link>
@@ -109,7 +109,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/menu" 
-                  className="text-gray-300 hover:text-pub-gold transition-colors duration-300"
+                  className="text-gray-300 hover:text-pub-green transition-colors duration-300"
                 >
                   Меню
                 </Link>
@@ -117,7 +117,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/reservations" 
-                  className="text-gray-300 hover:text-pub-gold transition-colors duration-300"
+                  className="text-gray-300 hover:text-pub-green transition-colors duration-300"
                 >
                   Бронирование
                 </Link>
@@ -125,7 +125,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/contact" 
-                  className="text-gray-300 hover:text-pub-gold transition-colors duration-300"
+                  className="text-gray-300 hover:text-pub-green transition-colors duration-300"
                 >
                   Контакты
                 </Link>

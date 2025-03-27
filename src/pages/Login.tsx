@@ -41,7 +41,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-pub-dark p-4">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-xl shadow-xl p-8 border border-pub-gold/20 animate-fade-up">
+        <div className="bg-white dark:bg-gray-900 rounded-xl shadow-xl p-8 border border-pub-green/20 animate-fade-up">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-playfair font-bold mb-2">Добро пожаловать</h1>
             <p className="text-muted-foreground">Войдите в свой аккаунт</p>
@@ -81,7 +81,7 @@ const Login = () => {
                 />
                 <button
                   type="button"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                   onClick={toggleShowPassword}
                 >
                   {showPassword ? (
@@ -94,7 +94,7 @@ const Login = () => {
               <div className="flex justify-end mt-2">
                 <Link 
                   to="/forgot-password" 
-                  className="text-sm text-pub-gold hover:underline"
+                  className="text-sm text-pub-green hover:underline"
                 >
                   Забыли пароль?
                 </Link>
@@ -119,7 +119,7 @@ const Login = () => {
           <div className="mt-8 text-center">
             <p className="text-muted-foreground">
               Нет аккаунта?{' '}
-              <Link to="/register" className="text-pub-gold hover:underline">
+              <Link to="/register" className="text-pub-green hover:underline">
                 Зарегистрироваться
               </Link>
             </p>

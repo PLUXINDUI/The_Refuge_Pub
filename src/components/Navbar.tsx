@@ -39,7 +39,7 @@ const Navbar = () => {
       <div className="container-custom flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2">
           <span className="text-2xl font-playfair font-bold text-white">
-            Паб <span className="text-pub-gold">«Убежище»</span>
+            Паб <span className="text-pub-green">«Убежище»</span>
           </span>
         </Link>
         
@@ -83,42 +83,42 @@ const Navbar = () => {
           <div className="container-custom py-4 flex flex-col space-y-4">
             <Link 
               to="/" 
-              className={`text-white hover:text-pub-gold ${isActive('/')}`}
+              className={`text-white hover:text-pub-green ${isActive('/')}`}
               onClick={() => setIsMenuOpen(false)}
             >
               Главная
             </Link>
             <Link 
               to="/about" 
-              className={`text-white hover:text-pub-gold ${isActive('/about')}`}
+              className={`text-white hover:text-pub-green ${isActive('/about')}`}
               onClick={() => setIsMenuOpen(false)}
             >
               О нас
             </Link>
             <Link 
               to="/menu" 
-              className={`text-white hover:text-pub-gold ${isActive('/menu')}`}
+              className={`text-white hover:text-pub-green ${isActive('/menu')}`}
               onClick={() => setIsMenuOpen(false)}
             >
               Меню
             </Link>
             <Link 
               to="/reservations" 
-              className={`text-white hover:text-pub-gold ${isActive('/reservations')}`}
+              className={`text-white hover:text-pub-green ${isActive('/reservations')}`}
               onClick={() => setIsMenuOpen(false)}
             >
               Бронирование
             </Link>
             <Link 
               to="/contact" 
-              className={`text-white hover:text-pub-gold ${isActive('/contact')}`}
+              className={`text-white hover:text-pub-green ${isActive('/contact')}`}
               onClick={() => setIsMenuOpen(false)}
             >
               Контакты
             </Link>
             <Link 
               to="/login" 
-              className={`text-white hover:text-pub-gold ${isActive('/login')}`}
+              className={`text-white hover:text-pub-green ${isActive('/login')}`}
               onClick={() => setIsMenuOpen(false)}
             >
               Вход

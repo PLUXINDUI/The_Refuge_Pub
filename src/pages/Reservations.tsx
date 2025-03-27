@@ -122,7 +122,7 @@ const Reservations = () => {
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <h1 className="heading-xl text-white mb-6">
-              Забронировать <span className="text-pub-gold">Стол</span>
+              Забронировать <span className="text-pub-green">Стол</span>
             </h1>
             <p className="text-gray-300 text-lg mb-8">
               Закрепите за собой место в The Refuge Pub для незабываемого ужина.
@@ -132,13 +132,13 @@ const Reservations = () => {
       </section>
 
       {/* Секция формы бронирования */}
-      <section className="section-padding">
+      <section className="section-padding bg-background dark:bg-pub-dark/80">
         <div className="container-custom">
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Левая колонка - Детали бронирования */}
               <div className="md:col-span-1 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-                <div className="bg-white rounded-xl shadow-lg p-6 border border-border sticky top-24">
+                <div className="bg-white dark:bg-pub-dark rounded-xl shadow-lg p-6 border border-border sticky top-24">
                   <h2 className="text-2xl font-playfair font-semibold mb-6">Детали бронирования</h2>
                   
                   <div className="space-y-6">
@@ -159,7 +159,7 @@ const Reservations = () => {
                             {date ? format(date, "d MMMM yyyy", { locale: ru }) : <span>Выберите дату</span>}
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 bg-white" align="start">
+                        <PopoverContent className="w-auto p-0 bg-white dark:bg-pub-dark" align="start">
                           <Calendar
                             mode="single"
                             selected={date}
@@ -184,7 +184,7 @@ const Reservations = () => {
                             variant="outline"
                             className={cn(
                               "justify-start text-left font-normal h-9",
-                              time === slot && "bg-pub-gold text-white hover:bg-pub-gold hover:text-white"
+                              time === slot && "bg-pub-green text-white hover:bg-pub-green hover:text-white"
                             )}
                             onClick={() => handleTimeSelect(slot)}
                           >
@@ -200,7 +200,7 @@ const Reservations = () => {
                         Количество гостей
                       </label>
                       <div className="flex items-center">
-                        <Users className="h-5 w-5 mr-2 text-pub-gold" />
+                        <Users className="h-5 w-5 mr-2 text-pub-green" />
                         <select
                           id="partySize"
                           value={partySize}
@@ -235,7 +235,7 @@ const Reservations = () => {
               
               {/* Правая колонка - Выбор стола */}
               <div className="md:col-span-2 animate-fade-up" style={{ animationDelay: '0.4s' }}>
-                <div className="bg-white rounded-xl shadow-lg p-6 border border-border mb-8">
+                <div className="bg-white dark:bg-pub-dark rounded-xl shadow-lg p-6 border border-border mb-8">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-2xl font-playfair font-semibold">Выберите стол</h2>
                     <div className="flex items-center space-x-4">
@@ -251,8 +251,8 @@ const Reservations = () => {
                   </div>
                   
                   {/* Карта столов */}
-                  <div className="border border-dashed border-gray-300 rounded-lg p-6 mb-6 relative bg-gray-50 min-h-[400px]">
-                    <div className="absolute top-4 left-4 p-2 bg-pub-gold/10 rounded text-sm">
+                  <div className="border border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 mb-6 relative bg-gray-50 dark:bg-gray-900 min-h-[400px]">
+                    <div className="absolute top-4 left-4 p-2 bg-pub-green/10 rounded text-sm">
                       <span className="font-medium">План паба</span>
                     </div>
                     
@@ -271,14 +271,14 @@ const Reservations = () => {
                             table.status === 'available' 
                               ? "bg-green-500/10 border-green-500/30 hover:border-green-500" 
                               : "bg-red-500/10 border-red-500/30",
-                            selectedTable === table.id && table.status === 'available' && "border-pub-gold bg-pub-gold/10"
+                            selectedTable === table.id && table.status === 'available' && "border-pub-green bg-pub-green/10"
                           )}
                           onClick={() => handleTableSelect(table.id)}
                         >
                           <span className="font-medium">{table.name}</span>
                           <span className="text-sm text-muted-foreground">{table.capacity} {table.capacity === 1 ? 'место' : table.capacity >= 2 && table.capacity <= 4 ? 'места' : 'мест'}</span>
                           {selectedTable === table.id && table.status === 'available' && (
-                            <div className="absolute -top-2 -right-2 bg-pub-gold text-white p-1 rounded-full">
+                            <div className="absolute -top-2 -right-2 bg-pub-green text-white p-1 rounded-full">
                               <Check className="h-4 w-4" />
                             </div>
                           )}
@@ -302,23 +302,23 @@ const Reservations = () => {
                   </div>
                 </div>
                 
-                <div className="bg-pub-gold/10 rounded-xl p-6 border border-pub-gold/30">
+                <div className="bg-pub-green/10 rounded-xl p-6 border border-pub-green/30">
                   <h3 className="text-xl font-playfair font-semibold mb-4">Правила бронирования</h3>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start">
-                      <span className="bg-pub-gold text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">1</span>
+                      <span className="bg-pub-green text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">1</span>
                       <span>Бронирование можно сделать за 30 дней до желаемой даты.</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="bg-pub-gold text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">2</span>
+                      <span className="bg-pub-green text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">2</span>
                       <span>Для групп более 10 человек, пожалуйста, позвоните нам по телефону +7 (495) 123-4567.</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="bg-pub-gold text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">3</span>
+                      <span className="bg-pub-green text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">3</span>
                       <span>Ваш стол будет зарезервирован на 15 минут после указанного времени.</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="bg-pub-gold text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">4</span>
+                      <span className="bg-pub-green text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">4</span>
                       <span>Для отмены или изменения бронирования, пожалуйста, свяжитесь с нами минимум за 4 часа.</span>
                     </li>
                   </ul>

@@ -54,8 +54,8 @@ export default {
 					foreground: 'hsl(var(--card-foreground))'
 				},
 				pub: {
-					'dark': '#1a1814',
-					'gold': '#cda45e',
+					'dark': '#121212',
+					'green': '#349c5d',
 					'light': '#f8f6f3',
 					'wood': '#483c32',
 					'muted': '#aca59e'

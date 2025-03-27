@@ -16,7 +16,7 @@
     --popover: 38 30% 98%;
     --popover-foreground: 35 25% 8%;
 
-    --primary: 39 76% 56%;
+    --primary: 146 50% 41%;
     --primary-foreground: 35 25% 8%;
 
     --secondary: 35 12% 94%;
@@ -25,7 +25,7 @@
     --muted: 35 8% 90%;
     --muted-foreground: 35 8% 40%;
 
-    --accent: 39 76% 56%;
+    --accent: 146 50% 41%;
     --accent-foreground: 35 25% 8%;
 
     --destructive: 0 84% 60%;
@@ -33,49 +33,47 @@
 
     --border: 35 8% 85%;
     --input: 35 8% 85%;
-    --ring: 39 76% 56%;
+    --ring: 146 50% 41%;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 35 25% 8%;
+    --background: 240 10% 6%;
     --foreground: 38 30% 96%;
 
-    --card: 35 20% 10%;
+    --card: 240 10% 8%;
     --card-foreground: 38 30% 96%;
 
-    --popover: 35 20% 10%;
+    --popover: 240 10% 8%;
     --popover-foreground: 38 30% 96%;
 
-    --primary: 39 76% 56%;
-    --primary-foreground: 35 25% 8%;
+    --primary: 146 50% 41%;
+    --primary-foreground: 240 10% 8%;
 
-    --secondary: 35 12% 20%;
+    --secondary: 240 6% 15%;
     --secondary-foreground: 38 30% 96%;
 
-    --muted: 35 12% 20%;
-    --muted-foreground: 35 8% 60%;
+    --muted: 240 6% 15%;
+    --muted-foreground: 240 5% 65%;
 
-    --accent: 39 76% 56%;
-    --accent-foreground: 35 25% 8%;
+    --accent: 146 50% 41%;
+    --accent-foreground: 240 10% 8%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 38 30% 96%;
 
-    --border: 35 12% 25%;
-    --input: 35 12% 25%;
-    --ring: 39 76% 56%;
+    --border: 240 6% 18%;
+    --input: 240 6% 18%;
+    --ring: 146 50% 41%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
 
   body {
-    @apply bg-background text-foreground font-raleway;
+    @apply bg-background text-foreground font-raleway dark:bg-pub-dark;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -113,11 +111,11 @@
   }
 
   .btn-primary {
-    @apply bg-pub-gold text-white px-6 py-3 rounded-md font-medium transition-all duration-300 ease-in-out hover:bg-amber-600 hover:shadow-md;
+    @apply bg-pub-green text-white px-6 py-3 rounded-md font-medium transition-all duration-300 ease-in-out hover:bg-emerald-700 hover:shadow-md;
   }
 
   .btn-outline {
-    @apply border-2 border-pub-gold text-pub-gold px-6 py-3 rounded-md font-medium transition-all duration-300 ease-in-out hover:bg-pub-gold hover:text-white hover:shadow-md;
+    @apply border-2 border-pub-green text-pub-green px-6 py-3 rounded-md font-medium transition-all duration-300 ease-in-out hover:bg-pub-green hover:text-white hover:shadow-md;
   }
 
   .page-transition {
@@ -125,19 +123,19 @@
   }
 
   .glass-card {
-    @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-lg;
+    @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-lg dark:bg-pub-dark/50;
   }
 
   .nav-link {
-    @apply relative px-3 py-2 text-sm font-medium transition-all duration-300 hover:text-pub-gold after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-pub-gold after:transition-all after:duration-300 hover:after:w-full;
+    @apply relative px-3 py-2 text-sm font-medium transition-all duration-300 hover:text-pub-green after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-pub-green after:transition-all after:duration-300 hover:after:w-full;
   }
 
   .nav-link-active {
-    @apply text-pub-gold after:w-full;
+    @apply text-pub-green after:w-full;
   }
 
   .menu-item {
-    @apply flex justify-between items-start border-b border-dashed border-pub-gold/30 pb-4 mb-4 last:border-0 last:mb-0 last:pb-0;
+    @apply flex justify-between items-start border-b border-dashed border-pub-green/30 pb-4 mb-4 last:border-0 last:mb-0 last:pb-0;
   }
 
   .menu-item-title {
@@ -145,7 +143,7 @@
   }
 
   .menu-item-price {
-    @apply text-pub-gold font-semibold;
+    @apply text-pub-green font-semibold;
   }
 
   .menu-item-desc {
@@ -153,7 +151,7 @@
   }
 
   .input-field {
-    @apply w-full px-4 py-3 rounded-md border border-border bg-transparent focus:outline-none focus:ring-2 focus:ring-pub-gold/50 transition-all duration-300;
+    @apply w-full px-4 py-3 rounded-md border border-border bg-transparent focus:outline-none focus:ring-2 focus:ring-pub-green/50 transition-all duration-300;
   }
 
   .table-grid {
@@ -161,7 +159,7 @@
   }
 
   .table-item {
-    @apply relative aspect-square rounded-xl overflow-hidden border-2 border-pub-gold/30 transition-all duration-300 hover:border-pub-gold hover:shadow-lg cursor-pointer;
+    @apply relative aspect-square rounded-xl overflow-hidden border-2 border-pub-green/30 transition-all duration-300 hover:border-pub-green hover:shadow-lg cursor-pointer;
   }
 
   .table-item-available {
