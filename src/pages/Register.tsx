@@ -29,8 +29,8 @@ const Register = () => {
     
     if (formData.password !== formData.confirmPassword) {
       toast({
-        title: "Error",
-        description: "Passwords do not match",
+        title: "Ошибка",
+        description: "Пароли не совпадают",
         variant: "destructive",
       });
       return;
@@ -39,7 +39,7 @@ const Register = () => {
     setIsLoading(true);
     
     try {
-      // Create user data object to be saved to the database
+      // Создаем объект данных пользователя для сохранения в базе данных
       const userData = {
         name: formData.name,
         email: formData.email,
@@ -47,14 +47,14 @@ const Register = () => {
         created_at: new Date().toISOString()
       };
       
-      // Simulate successful registration
+      // Имитация успешной регистрации
       setTimeout(() => {
-        // In a real implementation, you'd save this to your database
-        console.log('User registered:', userData);
+        // В реальной реализации вы бы сохранили это в вашей базе данных
+        console.log('Пользователь зарегистрирован:', userData);
         
         toast({
-          title: "Registration Successful",
-          description: "Your account has been created successfully!",
+          title: "Регистрация успешна",
+          description: "Ваш аккаунт успешно создан!",
           duration: 3000,
         });
         
@@ -64,8 +64,8 @@ const Register = () => {
     } catch (error) {
       setIsLoading(false);
       toast({
-        title: "Registration Failed",
-        description: "There was an error creating your account. Please try again.",
+        title: "Ошибка регистрации",
+        description: "При создании вашего аккаунта произошла ошибка. Пожалуйста, попробуйте еще раз.",
         variant: "destructive",
       });
     }
@@ -76,14 +76,14 @@ const Register = () => {
       <div className="w-full max-w-md">
         <div className="bg-white rounded-xl shadow-xl p-8 border border-pub-gold/20 animate-fade-up">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-playfair font-bold mb-2">Create an Account</h1>
-            <p className="text-muted-foreground">Join The Refuge Pub community</p>
+            <h1 className="text-3xl font-playfair font-bold mb-2">Создать аккаунт</h1>
+            <p className="text-muted-foreground">Присоединяйтесь к сообществу Паба «Убежище»</p>
           </div>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block mb-2 text-sm font-medium">
-                Full Name
+                Полное имя
               </label>
               <input
                 type="text"
@@ -92,14 +92,14 @@ const Register = () => {
                 value={formData.name}
                 onChange={handleChange}
                 className="input-field"
-                placeholder="John Doe"
+                placeholder="Иван Иванов"
                 required
               />
             </div>
             
             <div>
               <label htmlFor="email" className="block mb-2 text-sm font-medium">
-                Email Address
+                Электронная почта
               </label>
               <input
                 type="email"
@@ -108,14 +108,14 @@ const Register = () => {
                 value={formData.email}
                 onChange={handleChange}
                 className="input-field"
-                placeholder="john@example.com"
+                placeholder="ivan@example.com"
                 required
               />
             </div>
             
             <div>
               <label htmlFor="password" className="block mb-2 text-sm font-medium">
-                Password
+                Пароль
               </label>
               <div className="relative">
                 <input
@@ -142,13 +142,13 @@ const Register = () => {
                 </button>
               </div>
               <p className="text-xs text-muted-foreground mt-2">
-                Password must be at least 8 characters
+                Пароль должен содержать не менее 8 символов
               </p>
             </div>
             
             <div>
               <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium">
-                Confirm Password
+                Подтвердите пароль
               </label>
               <input
                 type={showPassword ? "text" : "password"}
@@ -168,10 +168,10 @@ const Register = () => {
               className="btn-primary w-full flex items-center justify-center"
             >
               {isLoading ? (
-                <span className="animate-pulse">Creating account...</span>
+                <span className="animate-pulse">Создание аккаунта...</span>
               ) : (
                 <>
-                  Create Account <UserPlus className="ml-2 h-4 w-4" />
+                  Создать аккаунт <UserPlus className="ml-2 h-4 w-4" />
                 </>
               )}
             </button>
@@ -179,9 +179,9 @@ const Register = () => {
           
           <div className="mt-8 text-center">
             <p className="text-muted-foreground">
-              Already have an account?{' '}
+              Уже есть аккаунт?{' '}
               <Link to="/login" className="text-pub-gold hover:underline">
-                Sign In
+                Войти
               </Link>
             </p>
           </div>
@@ -189,7 +189,7 @@ const Register = () => {
         
         <div className="text-center mt-6">
           <Link to="/" className="text-sm text-white/70 hover:text-white transition-colors duration-300">
-            &larr; Back to Homepage
+            &larr; Вернуться на главную
           </Link>
         </div>
       </div>

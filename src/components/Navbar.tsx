@@ -39,35 +39,35 @@ const Navbar = () => {
       <div className="container-custom flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2">
           <span className="text-2xl font-playfair font-bold text-white">
-            The <span className="text-pub-gold">Refuge</span> Pub
+            Паб <span className="text-pub-gold">«Убежище»</span>
           </span>
         </Link>
         
         <nav className="hidden md:flex space-x-1">
           <Link to="/" className={`nav-link text-white ${isActive('/')}`}>
-            Home
+            Главная
           </Link>
           <Link to="/about" className={`nav-link text-white ${isActive('/about')}`}>
-            About
+            О нас
           </Link>
           <Link to="/menu" className={`nav-link text-white ${isActive('/menu')}`}>
-            Menu
+            Меню
           </Link>
           <Link to="/reservations" className={`nav-link text-white ${isActive('/reservations')}`}>
-            Reservations
+            Бронирование
           </Link>
           <Link to="/contact" className={`nav-link text-white ${isActive('/contact')}`}>
-            Contact
+            Контакты
           </Link>
           <Link to="/login" className={`nav-link text-white ${isActive('/login')}`}>
-            Login
+            Вход
           </Link>
         </nav>
         
         <button 
           className="md:hidden text-white"
           onClick={toggleMenu}
-          aria-label="Toggle menu"
+          aria-label="Переключить меню"
         >
           {isMenuOpen ? (
             <X className="h-6 w-6" />
@@ -77,7 +77,7 @@ const Navbar = () => {
         </button>
       </div>
       
-      {/* Mobile menu */}
+      {/* Мобильное меню */}
       {isMenuOpen && (
         <div className="md:hidden bg-pub-dark/95 backdrop-blur-md animate-slide-in">
           <div className="container-custom py-4 flex flex-col space-y-4">
@@ -86,42 +86,42 @@ const Navbar = () => {
               className={`text-white hover:text-pub-gold ${isActive('/')}`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Home
+              Главная
             </Link>
             <Link 
               to="/about" 
               className={`text-white hover:text-pub-gold ${isActive('/about')}`}
               onClick={() => setIsMenuOpen(false)}
             >
-              About
+              О нас
             </Link>
             <Link 
               to="/menu" 
               className={`text-white hover:text-pub-gold ${isActive('/menu')}`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Menu
+              Меню
             </Link>
             <Link 
               to="/reservations" 
               className={`text-white hover:text-pub-gold ${isActive('/reservations')}`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Reservations
+              Бронирование
             </Link>
             <Link 
               to="/contact" 
               className={`text-white hover:text-pub-gold ${isActive('/contact')}`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Contact
+              Контакты
             </Link>
             <Link 
               to="/login" 
               className={`text-white hover:text-pub-gold ${isActive('/login')}`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Login
+              Вход
             </Link>
           </div>
         </div>

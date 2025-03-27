@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
@@ -8,24 +9,24 @@ import { Calendar as CalendarIcon, Clock, Users, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from "@/components/ui/use-toast";
 
-// Mock table data
+// Мок-данные о столах
 const TABLES = [
-  { id: 1, name: 'Table 1', capacity: 2, position: { x: 10, y: 10 }, status: 'available' },
-  { id: 2, name: 'Table 2', capacity: 2, position: { x: 60, y: 10 }, status: 'available' },
-  { id: 3, name: 'Table 3', capacity: 4, position: { x: 10, y: 50 }, status: 'available' },
-  { id: 4, name: 'Table 4', capacity: 4, position: { x: 60, y: 50 }, status: 'reserved' },
-  { id: 5, name: 'Table 5', capacity: 6, position: { x: 30, y: 80 }, status: 'available' },
-  { id: 6, name: 'Table 6', capacity: 8, position: { x: 80, y: 80 }, status: 'available' },
+  { id: 1, name: 'Стол 1', capacity: 2, position: { x: 10, y: 10 }, status: 'available' },
+  { id: 2, name: 'Стол 2', capacity: 2, position: { x: 60, y: 10 }, status: 'available' },
+  { id: 3, name: 'Стол 3', capacity: 4, position: { x: 10, y: 50 }, status: 'available' },
+  { id: 4, name: 'Стол 4', capacity: 4, position: { x: 60, y: 50 }, status: 'reserved' },
+  { id: 5, name: 'Стол 5', capacity: 6, position: { x: 30, y: 80 }, status: 'available' },
+  { id: 6, name: 'Стол 6', capacity: 8, position: { x: 80, y: 80 }, status: 'available' },
 ];
 
-// Available time slots
+// Доступные временные слоты
 const TIME_SLOTS = [
-  '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', 
-  '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM',
-  '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM',
-  '5:00 PM', '5:30 PM', '6:00 PM', '6:30 PM',
-  '7:00 PM', '7:30 PM', '8:00 PM', '8:30 PM',
-  '9:00 PM', '9:30 PM'
+  '11:00', '11:30', '12:00', '12:30', 
+  '13:00', '13:30', '14:00', '14:30',
+  '15:00', '15:30', '16:00', '16:30',
+  '17:00', '17:30', '18:00', '18:30',
+  '19:00', '19:30', '20:00', '20:30',
+  '21:00', '21:30'
 ];
 
 const Reservations = () => {
@@ -42,12 +43,12 @@ const Reservations = () => {
   }, []);
 
   const handleTableSelect = (id: number) => {
-    // Don't allow selection of reserved tables
+    // Нельзя выбрать уже зарезервированный стол
     const table = tables.find(t => t.id === id);
     if (table && table.status === 'reserved') {
       toast({
-        title: "Table Not Available",
-        description: `${table.name} is already reserved for this time.`,
+        title: "Стол недоступен",
+        description: `${table.name} уже зарезервирован на это время.`,
         variant: "destructive",
       });
       return;
@@ -71,8 +72,8 @@ const Reservations = () => {
   const handleSubmit = () => {
     if (!selectedTable || !date || !time) {
       toast({
-        title: "Incomplete Reservation",
-        description: "Please select a table, date, and time for your reservation.",
+        title: "Неполная бронь",
+        description: "Пожалуйста, выберите стол, дату и время для вашего бронирования.",
         variant: "destructive",
       });
       return;
@@ -80,7 +81,7 @@ const Reservations = () => {
     
     setIsSubmitting(true);
     
-    // Mock reservation data to be saved to the database
+    // Моковые данные бронирования для сохранения в базу данных
     const reservationData = {
       table_id: selectedTable,
       date: format(date, 'yyyy-MM-dd'),
@@ -91,22 +92,22 @@ const Reservations = () => {
       created_at: new Date().toISOString()
     };
     
-    // In a real implementation, this would be saved to your database
-    console.log('Reservation data:', reservationData);
+    // В реальной реализации данные сохранялись бы в вашу базу данных
+    console.log('Данные бронирования:', reservationData);
     
-    // Simulate successful reservation
+    // Имитация успешного бронирования
     setTimeout(() => {
       toast({
-        title: "Reservation Confirmed!",
-        description: `Your table is reserved for ${format(date, 'MMMM d, yyyy')} at ${time}.`,
+        title: "Бронирование подтверждено!",
+        description: `Ваш стол зарезервирован на ${format(date, 'd MMMM yyyy', { locale: ru })} в ${time}.`,
       });
       
-      // Update table status in our local state
+      // Обновление статуса стола в локальном состоянии
       setTables(prev => prev.map(table => 
         table.id === selectedTable ? { ...table, status: 'reserved' } : table
       ));
       
-      // Reset form
+      // Сброс формы
       setSelectedTable(null);
       setTime(null);
       setNote('');
@@ -116,34 +117,34 @@ const Reservations = () => {
 
   return (
     <div className="page-transition pt-24">
-      {/* Reservations Hero */}
+      {/* Заголовок бронирования */}
       <section className="bg-menu bg-cover bg-center py-24">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <h1 className="heading-xl text-white mb-6">
-              Reserve a <span className="text-pub-gold">Table</span>
+              Забронировать <span className="text-pub-gold">Стол</span>
             </h1>
             <p className="text-gray-300 text-lg mb-8">
-              Secure your spot at The Refuge Pub for a memorable dining experience.
+              Закрепите за собой место в The Refuge Pub для незабываемого ужина.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Reservation Form Section */}
+      {/* Секция формы бронирования */}
       <section className="section-padding">
         <div className="container-custom">
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Left Column - Reservation Details */}
+              {/* Левая колонка - Детали бронирования */}
               <div className="md:col-span-1 animate-fade-up" style={{ animationDelay: '0.2s' }}>
                 <div className="bg-white rounded-xl shadow-lg p-6 border border-border sticky top-24">
-                  <h2 className="text-2xl font-playfair font-semibold mb-6">Reservation Details</h2>
+                  <h2 className="text-2xl font-playfair font-semibold mb-6">Детали бронирования</h2>
                   
                   <div className="space-y-6">
                     <div>
                       <label className="block mb-2 text-sm font-medium">
-                        Date
+                        Дата
                       </label>
                       <Popover>
                         <PopoverTrigger asChild>
@@ -155,7 +156,7 @@ const Reservations = () => {
                             )}
                           >
                             <CalendarIcon className="mr-2 h-4 w-4" />
-                            {date ? format(date, "PPP") : <span>Select a date</span>}
+                            {date ? format(date, "d MMMM yyyy", { locale: ru }) : <span>Выберите дату</span>}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0 bg-white" align="start">
@@ -166,6 +167,7 @@ const Reservations = () => {
                             initialFocus
                             disabled={(date) => date < new Date()}
                             className={cn("p-3 pointer-events-auto")}
+                            locale={ru}
                           />
                         </PopoverContent>
                       </Popover>
@@ -173,7 +175,7 @@ const Reservations = () => {
                     
                     <div>
                       <label className="block mb-2 text-sm font-medium">
-                        Time
+                        Время
                       </label>
                       <div className="grid grid-cols-2 gap-2">
                         {TIME_SLOTS.map((slot) => (
@@ -195,7 +197,7 @@ const Reservations = () => {
                     
                     <div>
                       <label htmlFor="partySize" className="block mb-2 text-sm font-medium">
-                        Party Size
+                        Количество гостей
                       </label>
                       <div className="flex items-center">
                         <Users className="h-5 w-5 mr-2 text-pub-gold" />
@@ -207,7 +209,7 @@ const Reservations = () => {
                         >
                           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                             <option key={num} value={num}>
-                              {num} {num === 1 ? 'person' : 'people'}
+                              {num} {num === 1 ? 'человек' : num >= 2 && num <= 4 ? 'человека' : 'человек'}
                             </option>
                           ))}
                         </select>
@@ -216,7 +218,7 @@ const Reservations = () => {
                     
                     <div>
                       <label htmlFor="note" className="block mb-2 text-sm font-medium">
-                        Special Requests (Optional)
+                        Особые пожелания (необязательно)
                       </label>
                       <textarea
                         id="note"
@@ -224,42 +226,42 @@ const Reservations = () => {
                         onChange={handleNoteChange}
                         rows={3}
                         className="input-field resize-none"
-                        placeholder="Any special requests or dietary requirements?"
+                        placeholder="Особые пожелания или диетические требования?"
                       ></textarea>
                     </div>
                   </div>
                 </div>
               </div>
               
-              {/* Right Column - Table Selection */}
+              {/* Правая колонка - Выбор стола */}
               <div className="md:col-span-2 animate-fade-up" style={{ animationDelay: '0.4s' }}>
                 <div className="bg-white rounded-xl shadow-lg p-6 border border-border mb-8">
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl font-playfair font-semibold">Select a Table</h2>
+                    <h2 className="text-2xl font-playfair font-semibold">Выберите стол</h2>
                     <div className="flex items-center space-x-4">
                       <div className="flex items-center">
                         <div className="w-4 h-4 bg-green-500/20 border border-green-500 rounded-full mr-2"></div>
-                        <span className="text-sm">Available</span>
+                        <span className="text-sm">Доступен</span>
                       </div>
                       <div className="flex items-center">
                         <div className="w-4 h-4 bg-red-500/20 border border-red-500 rounded-full mr-2"></div>
-                        <span className="text-sm">Reserved</span>
+                        <span className="text-sm">Занят</span>
                       </div>
                     </div>
                   </div>
                   
-                  {/* Table Map */}
+                  {/* Карта столов */}
                   <div className="border border-dashed border-gray-300 rounded-lg p-6 mb-6 relative bg-gray-50 min-h-[400px]">
                     <div className="absolute top-4 left-4 p-2 bg-pub-gold/10 rounded text-sm">
-                      <span className="font-medium">Pub Layout</span>
+                      <span className="font-medium">План паба</span>
                     </div>
                     
-                    {/* Bar Area */}
+                    {/* Барная стойка */}
                     <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-3/4 h-16 bg-pub-wood rounded-lg flex items-center justify-center">
-                      <span className="text-white font-medium">Bar</span>
+                      <span className="text-white font-medium">Бар</span>
                     </div>
                     
-                    {/* Tables */}
+                    {/* Столы */}
                     <div className="mt-32 grid grid-cols-3 gap-8">
                       {tables.map((table) => (
                         <div
@@ -274,7 +276,7 @@ const Reservations = () => {
                           onClick={() => handleTableSelect(table.id)}
                         >
                           <span className="font-medium">{table.name}</span>
-                          <span className="text-sm text-muted-foreground">{table.capacity} seats</span>
+                          <span className="text-sm text-muted-foreground">{table.capacity} {table.capacity === 1 ? 'место' : table.capacity >= 2 && table.capacity <= 4 ? 'места' : 'мест'}</span>
                           {selectedTable === table.id && table.status === 'available' && (
                             <div className="absolute -top-2 -right-2 bg-pub-gold text-white p-1 rounded-full">
                               <Check className="h-4 w-4" />
@@ -292,32 +294,32 @@ const Reservations = () => {
                       disabled={!selectedTable || !date || !time || isSubmitting}
                     >
                       {isSubmitting ? (
-                        <span className="animate-pulse">Processing...</span>
+                        <span className="animate-pulse">Обработка...</span>
                       ) : (
-                        "Confirm Reservation"
+                        "Подтвердить бронирование"
                       )}
                     </Button>
                   </div>
                 </div>
                 
                 <div className="bg-pub-gold/10 rounded-xl p-6 border border-pub-gold/30">
-                  <h3 className="text-xl font-playfair font-semibold mb-4">Reservation Policy</h3>
+                  <h3 className="text-xl font-playfair font-semibold mb-4">Правила бронирования</h3>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start">
                       <span className="bg-pub-gold text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">1</span>
-                      <span>Reservations can be made up to 30 days in advance.</span>
+                      <span>Бронирование можно сделать за 30 дней до желаемой даты.</span>
                     </li>
                     <li className="flex items-start">
                       <span className="bg-pub-gold text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">2</span>
-                      <span>For parties larger than 10, please call us directly at +1 (303) 555-6789.</span>
+                      <span>Для групп более 10 человек, пожалуйста, позвоните нам по телефону +7 (495) 123-4567.</span>
                     </li>
                     <li className="flex items-start">
                       <span className="bg-pub-gold text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">3</span>
-                      <span>Your table will be held for 15 minutes after your reservation time.</span>
+                      <span>Ваш стол будет зарезервирован на 15 минут после указанного времени.</span>
                     </li>
                     <li className="flex items-start">
                       <span className="bg-pub-gold text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">4</span>
-                      <span>To cancel or modify a reservation, please contact us at least 4 hours in advance.</span>
+                      <span>Для отмены или изменения бронирования, пожалуйста, свяжитесь с нами минимум за 4 часа.</span>
                     </li>
                   </ul>
                 </div>

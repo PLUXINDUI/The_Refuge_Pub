@@ -9,10 +9,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
             <h3 className="text-2xl font-playfair font-bold mb-6">
-              The <span className="text-pub-gold">Refuge</span> Pub
+              Паб <span className="text-pub-gold">«Убежище»</span>
             </h3>
             <p className="text-sm text-gray-300 mb-6">
-              A place where tradition meets quality. Enjoy our carefully selected drinks and delicious food in a warm, welcoming atmosphere.
+              Место, где традиции встречаются с качеством. Наслаждайтесь нашими тщательно подобранными напитками и вкусной едой в теплой, гостеприимной атмосфере.
             </p>
             <div className="flex space-x-4">
               <a 
@@ -43,59 +43,59 @@ const Footer = () => {
           </div>
           
           <div>
-            <h4 className="text-xl font-playfair font-semibold mb-6">Contact Us</h4>
+            <h4 className="text-xl font-playfair font-semibold mb-6">Свяжитесь с нами</h4>
             <ul className="space-y-4 text-sm text-gray-300">
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 text-pub-gold mr-3 mt-0.5" />
-                <span>143 East Avenue, Denver, CO 80203, USA</span>
+                <span>ул. Восточная, 143, Москва, 123456, Россия</span>
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 text-pub-gold mr-3" />
-                <span>+1 (303) 555-6789</span>
+                <span>+7 (495) 123-4567</span>
               </li>
               <li className="flex items-center">
                 <Mail className="h-5 w-5 text-pub-gold mr-3" />
-                <span>info@therefugepub.com</span>
+                <span>info@pububezhishe.ru</span>
               </li>
             </ul>
           </div>
           
           <div>
-            <h4 className="text-xl font-playfair font-semibold mb-6">Opening Hours</h4>
+            <h4 className="text-xl font-playfair font-semibold mb-6">Часы работы</h4>
             <ul className="space-y-4 text-sm text-gray-300">
               <li className="flex items-start">
                 <Clock className="h-5 w-5 text-pub-gold mr-3 mt-0.5" />
                 <div>
-                  <p className="font-medium">Monday - Thursday</p>
-                  <p>11:00 AM - 11:00 PM</p>
+                  <p className="font-medium">Понедельник - Четверг</p>
+                  <p>11:00 - 23:00</p>
                 </div>
               </li>
               <li className="flex items-start">
                 <Clock className="h-5 w-5 text-pub-gold mr-3 mt-0.5" />
                 <div>
-                  <p className="font-medium">Friday - Saturday</p>
-                  <p>11:00 AM - 1:00 AM</p>
+                  <p className="font-medium">Пятница - Суббота</p>
+                  <p>11:00 - 01:00</p>
                 </div>
               </li>
               <li className="flex items-start">
                 <Clock className="h-5 w-5 text-pub-gold mr-3 mt-0.5" />
                 <div>
-                  <p className="font-medium">Sunday</p>
-                  <p>12:00 PM - 10:00 PM</p>
+                  <p className="font-medium">Воскресенье</p>
+                  <p>12:00 - 22:00</p>
                 </div>
               </li>
             </ul>
           </div>
           
           <div>
-            <h4 className="text-xl font-playfair font-semibold mb-6">Quick Links</h4>
+            <h4 className="text-xl font-playfair font-semibold mb-6">Быстрые ссылки</h4>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link 
                   to="/" 
                   className="text-gray-300 hover:text-pub-gold transition-colors duration-300"
                 >
-                  Home
+                  Главная
                 </Link>
               </li>
               <li>
@@ -103,7 +103,7 @@ const Footer = () => {
                   to="/about" 
                   className="text-gray-300 hover:text-pub-gold transition-colors duration-300"
                 >
-                  About Us
+                  О нас
                 </Link>
               </li>
               <li>
@@ -111,7 +111,7 @@ const Footer = () => {
                   to="/menu" 
                   className="text-gray-300 hover:text-pub-gold transition-colors duration-300"
                 >
-                  Menu
+                  Меню
                 </Link>
               </li>
               <li>
@@ -119,7 +119,7 @@ const Footer = () => {
                   to="/reservations" 
                   className="text-gray-300 hover:text-pub-gold transition-colors duration-300"
                 >
-                  Reservations
+                  Бронирование
                 </Link>
               </li>
               <li>
@@ -127,7 +127,7 @@ const Footer = () => {
                   to="/contact" 
                   className="text-gray-300 hover:text-pub-gold transition-colors duration-300"
                 >
-                  Contact
+                  Контакты
                 </Link>
               </li>
             </ul>
@@ -135,7 +135,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
-          <p>&copy; {new Date().getFullYear()} The Refuge Pub. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Паб «Убежище». Все права защищены.</p>
         </div>
       </div>
     </footer>

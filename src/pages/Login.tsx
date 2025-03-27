@@ -26,11 +26,11 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate authentication
+    // Имитация аутентификации
     setTimeout(() => {
       toast({
-        title: "Login Successful",
-        description: "Welcome back to The Refuge Pub!",
+        title: "Вход выполнен успешно",
+        description: "Добро пожаловать в Паб «Убежище»!",
         duration: 3000,
       });
       setIsLoading(false);
@@ -43,14 +43,14 @@ const Login = () => {
       <div className="w-full max-w-md">
         <div className="bg-white rounded-xl shadow-xl p-8 border border-pub-gold/20 animate-fade-up">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-playfair font-bold mb-2">Welcome Back</h1>
-            <p className="text-muted-foreground">Sign in to your account</p>
+            <h1 className="text-3xl font-playfair font-bold mb-2">Добро пожаловать</h1>
+            <p className="text-muted-foreground">Войдите в свой аккаунт</p>
           </div>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block mb-2 text-sm font-medium">
-                Email Address
+                Электронная почта
               </label>
               <input
                 type="email"
@@ -59,14 +59,14 @@ const Login = () => {
                 value={formData.email}
                 onChange={handleChange}
                 className="input-field"
-                placeholder="john@example.com"
+                placeholder="ivan@example.com"
                 required
               />
             </div>
             
             <div>
               <label htmlFor="password" className="block mb-2 text-sm font-medium">
-                Password
+                Пароль
               </label>
               <div className="relative">
                 <input
@@ -96,7 +96,7 @@ const Login = () => {
                   to="/forgot-password" 
                   className="text-sm text-pub-gold hover:underline"
                 >
-                  Forgot password?
+                  Забыли пароль?
                 </Link>
               </div>
             </div>
@@ -107,10 +107,10 @@ const Login = () => {
               className="btn-primary w-full flex items-center justify-center"
             >
               {isLoading ? (
-                <span className="animate-pulse">Signing in...</span>
+                <span className="animate-pulse">Вход в систему...</span>
               ) : (
                 <>
-                  Sign In <LogIn className="ml-2 h-4 w-4" />
+                  Войти <LogIn className="ml-2 h-4 w-4" />
                 </>
               )}
             </button>
@@ -118,9 +118,9 @@ const Login = () => {
           
           <div className="mt-8 text-center">
             <p className="text-muted-foreground">
-              Don't have an account?{' '}
+              Нет аккаунта?{' '}
               <Link to="/register" className="text-pub-gold hover:underline">
-                Register
+                Зарегистрироваться
               </Link>
             </p>
           </div>
@@ -128,7 +128,7 @@ const Login = () => {
         
         <div className="text-center mt-6">
           <Link to="/" className="text-sm text-white/70 hover:text-white transition-colors duration-300">
-            &larr; Back to Homepage
+            &larr; Вернуться на главную
           </Link>
         </div>
       </div>
