@@ -206,9 +206,7 @@ const Reservations = () => {
                   
                   {/* Карта столов */}
                   <div className="border border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 mb-6 relative min-h-[400px] bg-zinc-400">
-                    <div className="absolute top-4 left-4 p-2 bg-pub-green/10 rounded text-sm">
-                      <span className="font-medium">План паба</span>
-                    </div>
+                    
                     
                     {/* Барная стойка */}
                     <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-3/4 h-16 bg-pub-wood rounded-lg flex items-center justify-center">
