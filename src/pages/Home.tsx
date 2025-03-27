@@ -1,30 +1,37 @@
+
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Star, Users, Award, Clock } from 'lucide-react';
+
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
+  
   useEffect(() => {
     setIsVisible(true);
   }, []);
+  
   return <div className="page-transition">
       {/* Hero Section */}
-      <section className="bg-hero bg-cover bg-center h-screen flex items-center relative">
-        <div className="absolute inset-0 bg-black/30"></div>
+      <section className="bg-cover bg-center h-screen flex items-center relative" style={{ backgroundImage: "url('/lovable-uploads/6b5ed8ec-5bec-4861-8cdf-988efc7874eb.png')" }}>
+        <div className="absolute inset-0 bg-black/50"></div>
         <div className="container-custom relative z-10">
           <div className={`max-w-3xl transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-playfair font-bold text-white mb-6">
-              Welcome to<br />
-              <span className="text-pub-gold">The Refuge Pub</span>
-            </h1>
+            <div className="mb-6 flex items-center">
+              <img src="/lovable-uploads/71cd3d36-61f2-4833-8278-3d019aa667fa.png" alt="Логотип The Refuge Pub" className="h-32 w-32 mr-4" />
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-playfair font-bold text-white">
+                Добро пожаловать в<br />
+                <span className="text-pub-green">Паб "Убежище"</span>
+              </h1>
+            </div>
             <p className="text-white text-xl mb-8 max-w-xl">
-              A traditional pub with a modern twist, serving craft beers, classic cocktails, and delicious pub food.
+              Традиционный паб с современным подходом, предлагающий крафтовое пиво, классические коктейли и вкусную еду.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link to="/menu" className="btn-primary">
-                View Our Menu
+                Наше меню
               </Link>
               <Link to="/reservations" className="btn-outline">
-                Book a Table
+                Забронировать стол
               </Link>
             </div>
           </div>
@@ -32,37 +39,37 @@ const Home = () => {
       </section>
 
       {/* About Preview Section */}
-      <section className="section-padding bg-slate-100">
+      <section className="section-padding bg-slate-100 dark:bg-slate-900">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-center">
             <div className="order-2 md:order-1 animate-fade-up" style={{
             animationDelay: '0.2s'
           }}>
               <div className="flex items-center mb-4">
-                <div className="h-0.5 w-12 bg-pub-gold mr-4"></div>
-                <span className="text-pub-gold uppercase text-sm font-medium tracking-wider">About Us</span>
+                <div className="h-0.5 w-12 bg-pub-green mr-4"></div>
+                <span className="text-pub-green uppercase text-sm font-medium tracking-wider">О нас</span>
               </div>
               <h2 className="heading-lg mb-6">
-                Traditional Pub With a <span className="text-pub-gold">Modern Twist</span>
+                Традиционный паб с <span className="text-pub-green">современным подходом</span>
               </h2>
               <p className="text-muted-foreground mb-6">
-                The Refuge Pub has been serving the Denver community for over 25 years. What started as a small family business has grown into a beloved institution, while maintaining the warmth and character that our patrons have come to love.
+                Паб "Убежище" обслуживает посетителей в городе Жуковский уже более 5 лет. То, что начиналось как небольшой семейный бизнес, выросло в любимое заведение, сохраняя при этом тепло и характер, которые так полюбились нашим гостям.
               </p>
               <p className="text-muted-foreground mb-8">
-                We pride ourselves on our extensive selection of craft beers, premium spirits, and delicious, hearty pub food made from locally-sourced ingredients whenever possible.
+                Мы гордимся нашим широким выбором крафтового пива, премиальных спиртных напитков и вкусной, сытной пабной еды, приготовленной из местных ингредиентов.
               </p>
-              <Link to="/about" className="group inline-flex items-center text-pub-gold font-medium hover:underline">
-                Learn More <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <Link to="/about" className="group inline-flex items-center text-pub-green font-medium hover:underline">
+                Узнать больше <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
             <div className="order-1 md:order-2 animate-fade-up" style={{
             animationDelay: '0.4s'
           }}>
               <div className="relative">
-                <img src="/images/pub-interior.jpg" alt="The Refuge Pub Interior" className="rounded-lg shadow-lg w-full h-auto object-cover" />
-                <div className="absolute -bottom-6 -left-6 bg-pub-gold text-white p-4 rounded shadow-lg hidden md:block">
-                  <p className="font-playfair text-2xl font-bold">25+</p>
-                  <p className="text-sm">Years of Excellence</p>
+                <img src="/lovable-uploads/92fca82d-8276-42dd-aadf-006c766e3f8f.png" alt="Интерьер паба Убежище" className="rounded-lg shadow-lg w-full h-auto object-cover" />
+                <div className="absolute -bottom-6 -left-6 bg-pub-green text-white p-4 rounded shadow-lg hidden md:block">
+                  <p className="font-playfair text-2xl font-bold">5+</p>
+                  <p className="text-sm">Лет отличного сервиса</p>
                 </div>
               </div>
             </div>
@@ -71,7 +78,70 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      
+      <section className="section-padding bg-white dark:bg-pub-dark">
+        <div className="container-custom">
+          <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-up" style={{
+          animationDelay: '0.2s'
+        }}>
+            <div className="flex items-center justify-center mb-4">
+              <div className="h-0.5 w-12 bg-pub-green mr-4"></div>
+              <span className="text-pub-green uppercase text-sm font-medium tracking-wider">Почему мы</span>
+              <div className="h-0.5 w-12 bg-pub-green ml-4"></div>
+            </div>
+            <h2 className="heading-lg mb-6">
+              Что делает нас <span className="text-pub-green">особенными</span>
+            </h2>
+            <p className="text-muted-foreground">
+              Паб "Убежище" предлагает уникальный опыт, который сочетает в себе качество, атмосферу и традиции.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-slate-100 dark:bg-slate-800 p-8 rounded-xl shadow-md transform transition-all duration-500 hover:-translate-y-2 animate-fade-up" style={{
+            animationDelay: '0.3s'
+          }}>
+              <Star className="text-pub-green h-10 w-10 mb-6" />
+              <h3 className="text-xl font-playfair font-semibold mb-4">Качественная кухня</h3>
+              <p className="text-muted-foreground">
+                Мы готовим из свежих, местных ингредиентов, чтобы создавать блюда, которые порадуют ваши вкусовые рецепторы.
+              </p>
+            </div>
+            
+            <div className="bg-slate-100 dark:bg-slate-800 p-8 rounded-xl shadow-md transform transition-all duration-500 hover:-translate-y-2 animate-fade-up" style={{
+            animationDelay: '0.4s'
+          }}>
+              <Users className="text-pub-green h-10 w-10 mb-6" />
+              <h3 className="text-xl font-playfair font-semibold mb-4">Дружелюбная атмосфера</h3>
+              <p className="text-muted-foreground">
+                Наш персонал стремится создать теплую, гостеприимную атмосферу, где каждый гость чувствует себя как дома.
+              </p>
+            </div>
+            
+            <div className="bg-slate-100 dark:bg-slate-800 p-8 rounded-xl shadow-md transform transition-all duration-500 hover:-translate-y-2 animate-fade-up" style={{
+            animationDelay: '0.5s'
+          }}>
+              <Award className="text-pub-green h-10 w-10 mb-6" />
+              <h3 className="text-xl font-playfair font-semibold mb-4">Богатый выбор напитков</h3>
+              <p className="text-muted-foreground">
+                От крафтового пива до премиальных виски – наша барная карта удовлетворит даже самых требовательных ценителей.
+              </p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+            <div className="flex items-center animate-fade-up" style={{
+            animationDelay: '0.6s'
+          }}>
+              <img src="/lovable-uploads/fe3648ce-2d48-4cc7-8d83-bd6acb6a24ce.png" alt="Интерьер паба Убежище" className="rounded-lg shadow-lg w-full h-auto object-cover" />
+            </div>
+            <div className="flex items-center animate-fade-up" style={{
+            animationDelay: '0.7s'
+          }}>
+              <img src="/lovable-uploads/2ccaa5f9-6f9d-4c7a-b19a-3410600c64bb.png" alt="Интерьер паба Убежище" className="rounded-lg shadow-lg w-full h-auto object-cover" />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Menu Preview */}
       <section className="section-padding bg-menu bg-fixed bg-cover bg-center">
@@ -80,74 +150,74 @@ const Home = () => {
           animationDelay: '0.2s'
         }}>
             <div className="flex items-center justify-center mb-4">
-              <div className="h-0.5 w-12 bg-pub-gold mr-4"></div>
-              
-              <div className="h-0.5 w-12 bg-pub-gold ml-4"></div>
+              <div className="h-0.5 w-12 bg-pub-green mr-4"></div>
+              <span className="text-pub-green uppercase text-sm font-medium tracking-wider">Наше меню</span>
+              <div className="h-0.5 w-12 bg-pub-green ml-4"></div>
             </div>
             <h2 className="heading-lg text-white mb-6">
-              Discover Our <span className="text-pub-gold">Menu</span>
+              Откройте для себя наше <span className="text-pub-green">Меню</span>
             </h2>
-            <p className="text-gray-300">В пабе The Refuge найдется что-то для каждого - от традиционных любимых блюд паба до инновационных кулинарных творений.</p>
+            <p className="text-gray-300">В пабе "Убежище" найдется что-то для каждого - от традиционных любимых блюд паба до инновационных кулинарных творений.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="glass-card p-8 animate-fade-up" style={{
             animationDelay: '0.3s'
           }}>
-              <h3 className="text-2xl font-playfair text-white mb-6">Food Menu Highlights</h3>
+              <h3 className="text-2xl font-playfair text-white mb-6">Основные блюда</h3>
               
               <div className="menu-item">
                 <div>
-                  <h4 className="menu-item-title text-white">Classic Fish & Chips</h4>
-                  <p className="menu-item-desc text-gray-300">Beer-battered cod, hand-cut fries, homemade tartar sauce</p>
+                  <h4 className="menu-item-title text-white">Фиш энд чипс</h4>
+                  <p className="menu-item-desc text-gray-300">Треска в пивном кляре, картофель фри, домашний соус тартар</p>
                 </div>
-                <span className="menu-item-price">$16</span>
+                <span className="menu-item-price">750₽</span>
               </div>
               
               <div className="menu-item">
                 <div>
-                  <h4 className="menu-item-title text-white">Shepherd's Pie</h4>
-                  <p className="menu-item-desc text-gray-300">Ground lamb, vegetables, mashed potato crust</p>
+                  <h4 className="menu-item-title text-white">Пастуший пирог</h4>
+                  <p className="menu-item-desc text-gray-300">Фарш из баранины, овощи, картофельная корочка</p>
                 </div>
-                <span className="menu-item-price">$18</span>
+                <span className="menu-item-price">820₽</span>
               </div>
               
               <div className="menu-item">
                 <div>
-                  <h4 className="menu-item-title text-white">Pub Burger</h4>
-                  <p className="menu-item-desc text-gray-300">Angus beef, cheddar, bacon, special sauce, brioche bun</p>
+                  <h4 className="menu-item-title text-white">Фирменный бургер</h4>
+                  <p className="menu-item-desc text-gray-300">Говядина ангус, чеддер, бекон, фирменный соус, булочка бриошь</p>
                 </div>
-                <span className="menu-item-price">$17</span>
+                <span className="menu-item-price">790₽</span>
               </div>
             </div>
             
             <div className="glass-card p-8 animate-fade-up" style={{
             animationDelay: '0.4s'
           }}>
-              <h3 className="text-2xl font-playfair text-white mb-6">Drinks Menu Highlights</h3>
+              <h3 className="text-2xl font-playfair text-white mb-6">Напитки</h3>
               
               <div className="menu-item">
                 <div>
-                  <h4 className="menu-item-title text-white">Craft Beer Selection</h4>
-                  <p className="menu-item-desc text-gray-300">Rotating selection of local and imported beers</p>
+                  <h4 className="menu-item-title text-white">Крафтовое пиво</h4>
+                  <p className="menu-item-desc text-gray-300">Ротационный выбор местных и импортных сортов</p>
                 </div>
-                <span className="menu-item-price">$6-9</span>
+                <span className="menu-item-price">от 300₽</span>
               </div>
               
               <div className="menu-item">
                 <div>
-                  <h4 className="menu-item-title text-white">Classic Whiskey Cocktails</h4>
-                  <p className="menu-item-desc text-gray-300">Old Fashioned, Manhattan, Whiskey Sour</p>
+                  <h4 className="menu-item-title text-white">Классические коктейли с виски</h4>
+                  <p className="menu-item-desc text-gray-300">Олд Фэшн, Манхэттен, Виски Сауэр</p>
                 </div>
-                <span className="menu-item-price">$12</span>
+                <span className="menu-item-price">550₽</span>
               </div>
               
               <div className="menu-item">
                 <div>
-                  <h4 className="menu-item-title text-white">Premium Wine Selection</h4>
-                  <p className="menu-item-desc text-gray-300">Curated selection of reds, whites, and rosés</p>
+                  <h4 className="menu-item-title text-white">Премиальные вина</h4>
+                  <p className="menu-item-desc text-gray-300">Тщательно подобранная коллекция красных, белых и розовых вин</p>
                 </div>
-                <span className="menu-item-price">$9-12</span>
+                <span className="menu-item-price">от 350₽</span>
               </div>
             </div>
           </div>
@@ -169,11 +239,11 @@ const Home = () => {
             <div className="absolute inset-0 bg-black/30"></div>
             <div className="relative z-10 max-w-3xl">
               <h2 className="heading-lg mb-6">
-                Ready for an Unforgettable <span className="text-pub-gold">Pub Experience</span>?
+                Готовы к незабываемому <span className="text-pub-green">опыту в пабе</span>?
               </h2>
               <p className="text-gray-300 mb-8">Закажите столик прямо сейчас и насладитесь теплой атмосферой, исключительной кухней и богатым выбором напитков.</p>
               <div className="flex flex-wrap gap-4">
-                <Link to="/reservations" className="btn-primary">Заказать столик</Link>
+                <Link to="/reservations" className="btn-primary">Забронировать столик</Link>
                 <Link to="/contact" className="btn-outline">Связаться с нами</Link>
               </div>
             </div>
@@ -182,4 +252,5 @@ const Home = () => {
       </section>
     </div>;
 };
+
 export default Home;

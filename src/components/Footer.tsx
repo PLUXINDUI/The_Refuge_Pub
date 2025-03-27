@@ -1,13 +1,18 @@
+
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { Facebook, Twitter, Instagram, MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
+
 const Footer = () => {
   return <footer className="bg-pub-dark text-white pt-16 pb-8">
       <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
-            <h3 className="text-2xl font-playfair font-bold mb-6">
-              Паб <span className="text-pub-green">The Refuge Pub</span>
-            </h3>
+            <div className="flex items-center mb-6">
+              <img src="/lovable-uploads/71cd3d36-61f2-4833-8278-3d019aa667fa.png" alt="Логотип The Refuge Pub" className="h-12 w-12 mr-3" />
+              <h3 className="text-2xl font-playfair font-bold">
+                Паб <span className="text-pub-green">"Убежище"</span>
+              </h3>
+            </div>
             <p className="text-sm text-gray-300 mb-6">
               Место, где традиции встречаются с качеством. Наслаждайтесь нашими тщательно подобранными напитками и вкусной едой в теплой, гостеприимной атмосфере.
             </p>
@@ -20,6 +25,9 @@ const Footer = () => {
               </a>
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-pub-green transition-colors duration-300">
                 <Instagram className="h-5 w-5" />
+              </a>
+              <a href="https://t.me/refuge_pub" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-pub-green transition-colors duration-300">
+                <MessageCircle className="h-5 w-5" />
               </a>
             </div>
           </div>
@@ -38,6 +46,12 @@ const Footer = () => {
               <li className="flex items-center">
                 <Mail className="h-5 w-5 text-pub-green mr-3" />
                 <span>info@pububezhishe.ru</span>
+              </li>
+              <li className="flex items-center">
+                <MessageCircle className="h-5 w-5 text-pub-green mr-3" />
+                <a href="https://t.me/refuge_pub" target="_blank" rel="noopener noreferrer" className="hover:text-pub-green transition-colors">
+                  Telegram
+                </a>
               </li>
             </ul>
           </div>
@@ -107,4 +121,5 @@ const Footer = () => {
       </div>
     </footer>;
 };
+
 export default Footer;

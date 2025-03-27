@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, MessageCircle } from 'lucide-react';
 import { toast } from "@/components/ui/use-toast";
 
 const Contact = () => {
@@ -21,11 +21,11 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
+    // Имитация отправки формы
     setTimeout(() => {
       toast({
-        title: "Message Sent",
-        description: "Thank you for your message. We'll get back to you soon!",
+        title: "Сообщение отправлено",
+        description: "Спасибо за ваше сообщение. Мы свяжемся с вами в ближайшее время!",
         duration: 5000,
       });
       setFormData({
@@ -45,10 +45,10 @@ const Contact = () => {
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <h1 className="heading-xl text-white mb-6">
-              Get in <span className="text-pub-gold">Touch</span>
+              Свяжитесь <span className="text-pub-green">С Нами</span>
             </h1>
             <p className="text-gray-300 text-lg mb-8">
-              Have questions or want to make a reservation? We'd love to hear from you.
+              Есть вопросы или хотите сделать бронь? Мы будем рады вам помочь.
             </p>
           </div>
         </div>
@@ -62,55 +62,69 @@ const Contact = () => {
             <div className="animate-fade-up" style={{ animationDelay: '0.2s' }}>
               <div className="mb-10">
                 <div className="flex items-center mb-4">
-                  <div className="h-0.5 w-12 bg-pub-gold mr-4"></div>
-                  <span className="text-pub-gold uppercase text-sm font-medium tracking-wider">Contact Details</span>
+                  <div className="h-0.5 w-12 bg-pub-green mr-4"></div>
+                  <span className="text-pub-green uppercase text-sm font-medium tracking-wider">Контактная информация</span>
                 </div>
-                <h2 className="heading-lg mb-6">Reach Out to Us</h2>
+                <h2 className="heading-lg mb-6">Свяжитесь с нами</h2>
                 <p className="text-muted-foreground">
-                  We're always happy to hear from our customers. Feel free to contact us with any questions, feedback, or to make a reservation.
+                  Мы всегда рады услышать от наших клиентов. Не стесняйтесь обращаться к нам с любыми вопросами, отзывами или для бронирования столика.
                 </p>
               </div>
 
               <div className="space-y-8">
                 <div className="flex items-start">
-                  <div className="bg-pub-gold/10 p-3 rounded-full mr-4">
-                    <MapPin className="h-6 w-6 text-pub-gold" />
+                  <div className="bg-pub-green/10 p-3 rounded-full mr-4">
+                    <MapPin className="h-6 w-6 text-pub-green" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">Our Location</h3>
-                    <p className="text-muted-foreground">143 East Avenue, Denver, CO 80203, USA</p>
+                    <h3 className="text-lg font-semibold mb-2">Наш адрес</h3>
+                    <p className="text-muted-foreground">г. Жуковский, ул. Молодежная, 21А</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start">
-                  <div className="bg-pub-gold/10 p-3 rounded-full mr-4">
-                    <Phone className="h-6 w-6 text-pub-gold" />
+                  <div className="bg-pub-green/10 p-3 rounded-full mr-4">
+                    <Phone className="h-6 w-6 text-pub-green" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">Call Us</h3>
-                    <p className="text-muted-foreground">+1 (303) 555-6789</p>
+                    <h3 className="text-lg font-semibold mb-2">Позвоните нам</h3>
+                    <p className="text-muted-foreground">+7 926 533-29-93</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start">
-                  <div className="bg-pub-gold/10 p-3 rounded-full mr-4">
-                    <Mail className="h-6 w-6 text-pub-gold" />
+                  <div className="bg-pub-green/10 p-3 rounded-full mr-4">
+                    <Mail className="h-6 w-6 text-pub-green" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">Email Us</h3>
-                    <p className="text-muted-foreground">info@therefugepub.com</p>
+                    <h3 className="text-lg font-semibold mb-2">Напишите нам</h3>
+                    <p className="text-muted-foreground">info@pububezhishe.ru</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start">
-                  <div className="bg-pub-gold/10 p-3 rounded-full mr-4">
-                    <Clock className="h-6 w-6 text-pub-gold" />
+                  <div className="bg-pub-green/10 p-3 rounded-full mr-4">
+                    <MessageCircle className="h-6 w-6 text-pub-green" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">Opening Hours</h3>
-                    <p className="text-muted-foreground mb-1">Monday - Thursday: 11:00 AM - 11:00 PM</p>
-                    <p className="text-muted-foreground mb-1">Friday - Saturday: 11:00 AM - 1:00 AM</p>
-                    <p className="text-muted-foreground">Sunday: 12:00 PM - 10:00 PM</p>
+                    <h3 className="text-lg font-semibold mb-2">Telegram</h3>
+                    <p className="text-muted-foreground">
+                      <a href="https://t.me/refuge_pub" target="_blank" rel="noopener noreferrer" className="hover:text-pub-green transition-colors">
+                        @refuge_pub
+                      </a>
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="bg-pub-green/10 p-3 rounded-full mr-4">
+                    <Clock className="h-6 w-6 text-pub-green" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">Часы работы</h3>
+                    <p className="text-muted-foreground mb-1">Понедельник - Четверг: 11:00 - 23:00</p>
+                    <p className="text-muted-foreground mb-1">Пятница - Суббота: 11:00 - 01:00</p>
+                    <p className="text-muted-foreground">Воскресенье: 12:00 - 22:00</p>
                   </div>
                 </div>
               </div>
@@ -118,13 +132,13 @@ const Contact = () => {
 
             {/* Contact Form */}
             <div className="animate-fade-up" style={{ animationDelay: '0.4s' }}>
-              <div className="bg-white rounded-xl shadow-lg p-8 border border-border">
-                <h3 className="text-2xl font-playfair font-semibold mb-6">Send Us a Message</h3>
+              <div className="bg-white dark:bg-pub-dark rounded-xl shadow-lg p-8 border border-border">
+                <h3 className="text-2xl font-playfair font-semibold mb-6">Отправьте нам сообщение</h3>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block mb-2 text-sm font-medium">
-                      Your Name
+                      Ваше имя
                     </label>
                     <input
                       type="text"
@@ -133,14 +147,14 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       className="input-field"
-                      placeholder="John Doe"
+                      placeholder="Иван Иванов"
                       required
                     />
                   </div>
                   
                   <div>
                     <label htmlFor="email" className="block mb-2 text-sm font-medium">
-                      Your Email
+                      Ваш Email
                     </label>
                     <input
                       type="email"
@@ -149,14 +163,14 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       className="input-field"
-                      placeholder="john@example.com"
+                      placeholder="ivan@example.com"
                       required
                     />
                   </div>
                   
                   <div>
                     <label htmlFor="subject" className="block mb-2 text-sm font-medium">
-                      Subject
+                      Тема
                     </label>
                     <input
                       type="text"
@@ -165,14 +179,14 @@ const Contact = () => {
                       value={formData.subject}
                       onChange={handleChange}
                       className="input-field"
-                      placeholder="How can we help you?"
+                      placeholder="Чем мы можем помочь?"
                       required
                     />
                   </div>
                   
                   <div>
                     <label htmlFor="message" className="block mb-2 text-sm font-medium">
-                      Message
+                      Сообщение
                     </label>
                     <textarea
                       id="message"
@@ -181,7 +195,7 @@ const Contact = () => {
                       onChange={handleChange}
                       rows={5}
                       className="input-field resize-none"
-                      placeholder="Your message here..."
+                      placeholder="Ваше сообщение..."
                       required
                     ></textarea>
                   </div>
@@ -192,10 +206,10 @@ const Contact = () => {
                     className="btn-primary w-full flex items-center justify-center"
                   >
                     {isSubmitting ? (
-                      <span className="animate-pulse">Sending...</span>
+                      <span className="animate-pulse">Отправка...</span>
                     ) : (
                       <>
-                        Send Message <Send className="ml-2 h-4 w-4" />
+                        Отправить сообщение <Send className="ml-2 h-4 w-4" />
                       </>
                     )}
                   </button>
@@ -207,23 +221,23 @@ const Contact = () => {
       </section>
 
       {/* Map Section */}
-      <section className="section-padding bg-secondary">
+      <section className="section-padding bg-secondary dark:bg-slate-900">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-up">
             <div className="flex items-center justify-center mb-4">
-              <div className="h-0.5 w-12 bg-pub-gold mr-4"></div>
-              <span className="text-pub-gold uppercase text-sm font-medium tracking-wider">Find Us</span>
-              <div className="h-0.5 w-12 bg-pub-gold ml-4"></div>
+              <div className="h-0.5 w-12 bg-pub-green mr-4"></div>
+              <span className="text-pub-green uppercase text-sm font-medium tracking-wider">Как нас найти</span>
+              <div className="h-0.5 w-12 bg-pub-green ml-4"></div>
             </div>
-            <h2 className="heading-lg mb-6">Our Location</h2>
+            <h2 className="heading-lg mb-6">Наше расположение</h2>
             <p className="text-muted-foreground">
-              Located in the heart of downtown Denver, we're easily accessible with plenty of parking nearby.
+              Паб "Убежище" расположен в городе Жуковский, рядом с центром города. До нас легко добраться, и поблизости есть парковка.
             </p>
           </div>
           
           <div className="rounded-xl overflow-hidden shadow-lg h-[400px] lg:h-[500px] animate-fade-up" style={{ animationDelay: '0.4s' }}>
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d49089.85174481982!2d-104.99358734179686!3d39.73778135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876b80aa231f17cf%3A0x118ef4f8278a36d6!2sDenver%2C%20CO!5e0!3m2!1sen!2sus!4v1710702323012!5m2!1sen!2sus" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2261.904688937217!2d38.12163287638918!3d55.59311997297246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x414a989ebc6470d7%3A0x91c6d8fa5436b833!2z0J_QsNCxINCS0LDRgNCw0L0!5e0!3m2!1sru!2sru!4v1710702323012!5m2!1sru!2sru" 
               width="100%" 
               height="100%" 
               style={{ border: 0 }} 

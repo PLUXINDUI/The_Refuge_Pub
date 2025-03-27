@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, LogIn } from 'lucide-react';
 import { toast } from "@/components/ui/use-toast";
+import { useUsers } from "@/hooks/useDatabase";
+import { User } from "@/models/types";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +14,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { data: users = [] } = useUsers();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,16 +29,29 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Имитация аутентификации
+    // Проверяем логин и пароль пользователя
     setTimeout(() => {
-      toast({
-        title: "Вход выполнен успешно",
-        description: "Добро пожаловать в Паб «Убежище»!",
-        duration: 3000,
-      });
+      const user = users.find((u: User) => 
+        u.email === formData.email
+      );
+      
+      if (user) {
+        toast({
+          title: "Вход выполнен успешно",
+          description: "Добро пожаловать в Паб «Убежище»!",
+          duration: 3000,
+        });
+        navigate('/');
+      } else {
+        toast({
+          title: "Ошибка входа",
+          description: "Неверный email или пароль",
+          variant: "destructive",
+        });
+      }
+      
       setIsLoading(false);
-      navigate('/');
-    }, 1500);
+    }, 1000);
   };
 
   return (

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, UserPlus } from 'lucide-react';
 import { toast } from "@/components/ui/use-toast";
+import { useAddUser } from "@/hooks/useDatabase";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -12,8 +13,8 @@ const Register = () => {
     confirmPassword: ''
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const addUser = useAddUser();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -36,45 +37,39 @@ const Register = () => {
       return;
     }
     
-    setIsLoading(true);
+    // Создаем объект данных пользователя для сохранения в базе данных
+    const userData = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password, // В реальном проекте пароль должен быть хеширован
+      created_at: new Date().toISOString()
+    };
     
-    try {
-      // Создаем объект данных пользователя для сохранения в базе данных
-      const userData = {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-        created_at: new Date().toISOString()
-      };
-      
-      // Имитация успешной регистрации
-      setTimeout(() => {
-        // В реальной реализации вы бы сохранили это в вашей базе данных
-        console.log('Пользователь зарегистрирован:', userData);
-        
+    // Добавляем пользователя в базу данных
+    addUser.mutate(userData, {
+      onSuccess: () => {
         toast({
           title: "Регистрация успешна",
           description: "Ваш аккаунт успешно создан!",
           duration: 3000,
         });
-        
-        setIsLoading(false);
         navigate('/login');
-      }, 1500);
-    } catch (error) {
-      setIsLoading(false);
-      toast({
-        title: "Ошибка регистрации",
-        description: "При создании вашего аккаунта произошла ошибка. Пожалуйста, попробуйте еще раз.",
-        variant: "destructive",
-      });
-    }
+      },
+      onError: (error) => {
+        console.error("Ошибка при регистрации:", error);
+        toast({
+          title: "Ошибка регистрации",
+          description: "При создании вашего аккаунта произошла ошибка. Пожалуйста, попробуйте еще раз.",
+          variant: "destructive",
+        });
+      }
+    });
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-pub-dark p-4">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-xl shadow-xl p-8 border border-pub-gold/20 animate-fade-up">
+        <div className="bg-white dark:bg-gray-900 rounded-xl shadow-xl p-8 border border-pub-green/20 animate-fade-up">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-playfair font-bold mb-2">Создать аккаунт</h1>
             <p className="text-muted-foreground">Присоединяйтесь к сообществу Паба «Убежище»</p>
@@ -164,10 +159,10 @@ const Register = () => {
             
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={addUser.isPending}
               className="btn-primary w-full flex items-center justify-center"
             >
-              {isLoading ? (
+              {addUser.isPending ? (
                 <span className="animate-pulse">Создание аккаунта...</span>
               ) : (
                 <>
@@ -180,7 +175,7 @@ const Register = () => {
           <div className="mt-8 text-center">
             <p className="text-muted-foreground">
               Уже есть аккаунт?{' '}
-              <Link to="/login" className="text-pub-gold hover:underline">
+              <Link to="/login" className="text-pub-green hover:underline">
                 Войти
               </Link>
             </p>

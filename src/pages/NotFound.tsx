@@ -15,6 +15,7 @@ const NotFound = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-pub-dark p-6">
       <div className="text-center animate-fade-up">
+        <img src="/lovable-uploads/71cd3d36-61f2-4833-8278-3d019aa667fa.png" alt="Логотип The Refuge Pub" className="h-24 w-24 mb-4 mx-auto" />
         <h1 className="text-6xl font-playfair font-bold text-white mb-4">404</h1>
         <p className="text-xl text-gray-300 mb-6">Упс! Страница не найдена</p>
         <p className="text-gray-400 mb-8 max-w-md">

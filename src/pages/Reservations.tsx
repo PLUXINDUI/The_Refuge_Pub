@@ -8,16 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Calendar as CalendarIcon, Clock, Users, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from "@/components/ui/use-toast";
-
-// Мок-данные о столах
-const TABLES = [
-  { id: 1, name: 'Стол 1', capacity: 2, position: { x: 10, y: 10 }, status: 'available' },
-  { id: 2, name: 'Стол 2', capacity: 2, position: { x: 60, y: 10 }, status: 'available' },
-  { id: 3, name: 'Стол 3', capacity: 4, position: { x: 10, y: 50 }, status: 'available' },
-  { id: 4, name: 'Стол 4', capacity: 4, position: { x: 60, y: 50 }, status: 'reserved' },
-  { id: 5, name: 'Стол 5', capacity: 6, position: { x: 30, y: 80 }, status: 'available' },
-  { id: 6, name: 'Стол 6', capacity: 8, position: { x: 80, y: 80 }, status: 'available' },
-];
+import { useTables, useAddReservation } from "@/hooks/useDatabase";
+import { Table } from "@/models/types";
 
 // Доступные временные слоты
 const TIME_SLOTS = [
@@ -36,7 +28,10 @@ const Reservations = () => {
   const [partySize, setPartySize] = useState(2);
   const [note, setNote] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [tables, setTables] = useState(TABLES);
+  
+  // Получаем данные о столах из базы данных
+  const { data: tables = [], isLoading: tablesLoading } = useTables();
+  const addReservation = useAddReservation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -44,7 +39,7 @@ const Reservations = () => {
 
   const handleTableSelect = (id: number) => {
     // Нельзя выбрать уже зарезервированный стол
-    const table = tables.find(t => t.id === id);
+    const table = tables.find((t: Table) => t.id === id);
     if (table && table.status === 'reserved') {
       toast({
         title: "Стол недоступен",
@@ -81,38 +76,42 @@ const Reservations = () => {
     
     setIsSubmitting(true);
     
-    // Моковые данные бронирования для сохранения в базу данных
+    // Создаем объект бронирования для сохранения в базу данных
     const reservationData = {
+      user_id: "guest", // В реальной реализации здесь был бы ID авторизованного пользователя
       table_id: selectedTable,
       date: format(date, 'yyyy-MM-dd'),
       time,
       party_size: partySize,
       note,
-      status: 'confirmed',
+      status: 'confirmed' as const,
       created_at: new Date().toISOString()
     };
     
-    // В реальной реализации данные сохранялись бы в вашу базу данных
-    console.log('Данные бронирования:', reservationData);
-    
-    // Имитация успешного бронирования
-    setTimeout(() => {
-      toast({
-        title: "Бронирование подтверждено!",
-        description: `Ваш стол зарезервирован на ${format(date, 'd MMMM yyyy', { locale: ru })} в ${time}.`,
-      });
-      
-      // Обновление статуса стола в локальном состоянии
-      setTables(prev => prev.map(table => 
-        table.id === selectedTable ? { ...table, status: 'reserved' } : table
-      ));
-      
-      // Сброс формы
-      setSelectedTable(null);
-      setTime(null);
-      setNote('');
-      setIsSubmitting(false);
-    }, 1500);
+    // Добавляем бронирование в базу данных
+    addReservation.mutate(reservationData, {
+      onSuccess: () => {
+        toast({
+          title: "Бронирование подтверждено!",
+          description: `Ваш стол зарезервирован на ${format(date, 'd MMMM yyyy', { locale: ru })} в ${time}.`,
+        });
+        
+        // Сброс формы
+        setSelectedTable(null);
+        setTime(null);
+        setNote('');
+        setIsSubmitting(false);
+      },
+      onError: (error) => {
+        console.error("Ошибка при бронировании:", error);
+        toast({
+          title: "Ошибка бронирования",
+          description: "Произошла ошибка при бронировании стола. Пожалуйста, попробуйте еще раз.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+      }
+    });
   };
 
   return (
@@ -125,7 +124,7 @@ const Reservations = () => {
               Забронировать <span className="text-pub-green">Стол</span>
             </h1>
             <p className="text-gray-300 text-lg mb-8">
-              Закрепите за собой место в The Refuge Pub для незабываемого ужина.
+              Закрепите за собой место в пабе "Убежище" для незабываемого ужина.
             </p>
           </div>
         </div>
@@ -263,27 +262,31 @@ const Reservations = () => {
                     
                     {/* Столы */}
                     <div className="mt-32 grid grid-cols-3 gap-8">
-                      {tables.map((table) => (
-                        <div
-                          key={table.id}
-                          className={cn(
-                            "aspect-square rounded-lg border-2 flex flex-col items-center justify-center cursor-pointer transition-all duration-300",
-                            table.status === 'available' 
-                              ? "bg-green-500/10 border-green-500/30 hover:border-green-500" 
-                              : "bg-red-500/10 border-red-500/30",
-                            selectedTable === table.id && table.status === 'available' && "border-pub-green bg-pub-green/10"
-                          )}
-                          onClick={() => handleTableSelect(table.id)}
-                        >
-                          <span className="font-medium">{table.name}</span>
-                          <span className="text-sm text-muted-foreground">{table.capacity} {table.capacity === 1 ? 'место' : table.capacity >= 2 && table.capacity <= 4 ? 'места' : 'мест'}</span>
-                          {selectedTable === table.id && table.status === 'available' && (
-                            <div className="absolute -top-2 -right-2 bg-pub-green text-white p-1 rounded-full">
-                              <Check className="h-4 w-4" />
-                            </div>
-                          )}
-                        </div>
-                      ))}
+                      {tablesLoading ? (
+                        <div className="col-span-3 text-center py-12">Загрузка столов...</div>
+                      ) : (
+                        tables.map((table: Table) => (
+                          <div
+                            key={table.id}
+                            className={cn(
+                              "aspect-square rounded-lg border-2 flex flex-col items-center justify-center cursor-pointer transition-all duration-300",
+                              table.status === 'available' 
+                                ? "bg-green-500/10 border-green-500/30 hover:border-green-500" 
+                                : "bg-red-500/10 border-red-500/30",
+                              selectedTable === table.id && table.status === 'available' && "border-pub-green bg-pub-green/10"
+                            )}
+                            onClick={() => handleTableSelect(table.id)}
+                          >
+                            <span className="font-medium">{table.name}</span>
+                            <span className="text-sm text-muted-foreground">{table.capacity} {table.capacity === 1 ? 'место' : table.capacity >= 2 && table.capacity <= 4 ? 'места' : 'мест'}</span>
+                            {selectedTable === table.id && table.status === 'available' && (
+                              <div className="absolute -top-2 -right-2 bg-pub-green text-white p-1 rounded-full">
+                                <Check className="h-4 w-4" />
+                              </div>
+                            )}
+                          </div>
+                        ))
+                      )}
                     </div>
                   </div>
                   
@@ -291,9 +294,9 @@ const Reservations = () => {
                     <Button
                       className="btn-primary"
                       onClick={handleSubmit}
-                      disabled={!selectedTable || !date || !time || isSubmitting}
+                      disabled={!selectedTable || !date || !time || isSubmitting || addReservation.isPending}
                     >
-                      {isSubmitting ? (
+                      {isSubmitting || addReservation.isPending ? (
                         <span className="animate-pulse">Обработка...</span>
                       ) : (
                         "Подтвердить бронирование"
@@ -311,7 +314,7 @@ const Reservations = () => {
                     </li>
                     <li className="flex items-start">
                       <span className="bg-pub-green text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">2</span>
-                      <span>Для групп более 10 человек, пожалуйста, позвоните нам по телефону +7 (495) 123-4567.</span>
+                      <span>Для групп более 10 человек, пожалуйста, позвоните нам по телефону +7 926 533-29-93.</span>
                     </li>
                     <li className="flex items-start">
                       <span className="bg-pub-green text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">3</span>
