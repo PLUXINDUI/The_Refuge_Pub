@@ -22,7 +22,7 @@ const Navbar = () => {
   const isActive = (path: string) => {
     return location.pathname === path ? 'nav-link-active' : '';
   };
-  return <header className="bg-zinc-900">
+  return <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-pub-dark/90 backdrop-blur-md py-3 shadow-lg' : 'bg-transparent py-5'}`}>
       <div className="container-custom flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2">
           <img src="/lovable-uploads/71cd3d36-61f2-4833-8278-3d019aa667fa.png" alt="Логотип The Refuge Pub" className="h-10 w-10" />
