@@ -1,7 +1,5 @@
-
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
-
 const Footer = () => {
   return <footer className="bg-pub-dark text-white pt-16 pb-8">
       <div className="container-custom">
@@ -18,16 +16,16 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-pub-green transition-colors duration-300">
-                <Facebook className="h-5 w-5" />
+                
               </a>
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-pub-green transition-colors duration-300">
-                <Twitter className="h-5 w-5" />
+                
               </a>
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-pub-green transition-colors duration-300">
-                <Instagram className="h-5 w-5" />
+                
               </a>
               <a href="https://t.me/refuge_pub" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-pub-green transition-colors duration-300">
-                <MessageCircle className="h-5 w-5" />
+                
               </a>
             </div>
           </div>
@@ -121,5 +119,4 @@ const Footer = () => {
       </div>
     </footer>;
 };
-
 export default Footer;
