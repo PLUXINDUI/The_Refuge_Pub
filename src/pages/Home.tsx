@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Star, Users, Award, Clock } from 'lucide-react';
-
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
-
   useEffect(() => {
     setIsVisible(true);
   }, []);
-
   return <div className="page-transition">
       {/* Hero Section */}
       <section className="bg-cover bg-center h-screen flex items-center relative" style={{
@@ -18,7 +15,7 @@ const Home = () => {
         <div className="container-custom relative z-10">
           <div className={`max-w-3xl transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}>
             <div className="mb-6 flex items-center">
-              <img src="/lovable-uploads/71cd3d36-61f2-4833-8278-3d019aa667fa.png" alt="Логотип The Refuge Pub" className="h-32 w-32 mr-4" />
+              
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-playfair font-bold text-white">
                 Добро пожаловать в<br />
                 <span className="text-pub-green">The Refuge Pub</span>
@@ -249,5 +246,4 @@ const Home = () => {
       </section>
     </div>;
 };
-
 export default Home;
