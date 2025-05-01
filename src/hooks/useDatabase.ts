@@ -15,7 +15,7 @@ const localStorageDatabase = {
       id: `user_${Date.now()}`,
     };
     localStorage.setItem('refuge_users', JSON.stringify([...users, newUser]));
-    return newUser;
+    return Promise.resolve(newUser);
   },
   reservations: () => {
     const reservations = localStorage.getItem('refuge_reservations');
@@ -28,7 +28,11 @@ const localStorageDatabase = {
       id: `reservation_${Date.now()}`,
     };
     localStorage.setItem('refuge_reservations', JSON.stringify([...reservations, newReservation]));
-    return newReservation;
+    
+    // Обновляем статус стола
+    localStorageDatabase.updateTable(reservation.table_id, { status: 'reserved' });
+    
+    return Promise.resolve(newReservation);
   },
   updateReservation: (id: string, data: Partial<Reservation>) => {
     const reservations = localStorageDatabase.reservations();
@@ -36,7 +40,7 @@ const localStorageDatabase = {
       res.id === id ? { ...res, ...data } : res
     );
     localStorage.setItem('refuge_reservations', JSON.stringify(updatedReservations));
-    return updatedReservations.find((res: Reservation) => res.id === id);
+    return Promise.resolve(updatedReservations.find((res: Reservation) => res.id === id));
   },
   tables: () => {
     const tables = localStorage.getItem('refuge_tables');
@@ -60,7 +64,7 @@ const localStorageDatabase = {
       table.id === id ? { ...table, ...data } : table
     );
     localStorage.setItem('refuge_tables', JSON.stringify(updatedTables));
-    return updatedTables.find((table: Table) => table.id === id);
+    return Promise.resolve(updatedTables.find((table: Table) => table.id === id));
   }
 };
 
@@ -98,14 +102,7 @@ export const useAddReservation = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: (reservationData: Omit<Reservation, 'id'>) => {
-      const newReservation = localStorageDatabase.addReservation(reservationData);
-      
-      // Обновляем статус стола
-      localStorageDatabase.updateTable(reservationData.table_id, { status: 'reserved' });
-      
-      return newReservation;
-    },
+    mutationFn: (reservationData: Omit<Reservation, 'id'>) => localStorageDatabase.addReservation(reservationData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['reservations'] });
       queryClient.invalidateQueries({ queryKey: ['tables'] });
