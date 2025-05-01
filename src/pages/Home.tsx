@@ -2,17 +2,20 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Star, Users, Award, Clock } from 'lucide-react';
+
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
   return <div className="page-transition">
       {/* Hero Section */}
       <section className="bg-cover bg-center h-screen flex items-center relative" style={{
-      backgroundImage: "url('/lovable-uploads/af299c00-1745-49f3-b2ef-1c95a18d1d25.png')"
+      backgroundImage: "url('/lovable-uploads/72d617a1-83e2-4f0a-82e6-c12e74614b4e.png')"
     }}>
-        <div className="absolute inset-0 bg-[#202b20] opacity-20"></div>
+        <div className="absolute inset-0 bg-[#202b20] opacity-70"></div>
         <div className="container-custom relative z-10">
           <div className={`max-w-3xl transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}>
             <div className="mb-6 flex items-center">
@@ -247,4 +250,5 @@ const Home = () => {
       </section>
     </div>;
 };
+
 export default Home;
