@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Star, Users, Award, Clock } from 'lucide-react';
@@ -9,9 +10,9 @@ const Home = () => {
   return <div className="page-transition">
       {/* Hero Section */}
       <section className="bg-cover bg-center h-screen flex items-center relative" style={{
-      backgroundImage: "url('/lovable-uploads/b985778c-353a-4a06-80d5-03ce3544bb2d.png')"
+      backgroundImage: "url('/lovable-uploads/af299c00-1745-49f3-b2ef-1c95a18d1d25.png')"
     }}>
-        <div className="absolute inset-0 bg-[#202b20]"></div>
+        <div className="absolute inset-0 bg-[#202b20] opacity-20"></div>
         <div className="container-custom relative z-10">
           <div className={`max-w-3xl transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}>
             <div className="mb-6 flex items-center">
