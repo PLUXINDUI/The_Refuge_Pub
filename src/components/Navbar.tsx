@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, MessageCircle } from 'lucide-react';
@@ -63,11 +64,15 @@ const Navbar = () => {
             <Link to="/" className={`text-white hover:text-pub-green ${isActive('/')}`} onClick={() => setIsMenuOpen(false)}>
               Главная
             </Link>
-            
+            <Link to="/about" className={`text-white hover:text-pub-green ${isActive('/about')}`} onClick={() => setIsMenuOpen(false)}>
+              О нас
+            </Link>
             <Link to="/menu" className={`text-white hover:text-pub-green ${isActive('/menu')}`} onClick={() => setIsMenuOpen(false)}>
               Меню
             </Link>
-            
+            <Link to="/gallery" className={`text-white hover:text-pub-green ${isActive('/gallery')}`} onClick={() => setIsMenuOpen(false)}>
+              Интерьер
+            </Link>
             <Link to="/reservations" className={`text-white hover:text-pub-green ${isActive('/reservations')}`} onClick={() => setIsMenuOpen(false)}>
               Бронирование
             </Link>
