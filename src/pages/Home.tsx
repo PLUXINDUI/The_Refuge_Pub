@@ -12,7 +12,7 @@ const Home = () => {
   return <div className="page-transition">
       {/* Hero Section */}
       <section className="bg-cover bg-center h-screen flex items-center relative" style={{
-      backgroundImage: "url('/lovable-uploads/6b5ed8ec-5bec-4861-8cdf-988efc7874eb.png')"
+      backgroundImage: "url('/lovable-uploads/a08e54d9-eba2-4c0a-adc5-3ee3fb8c730e.png')"
     }}>
         <div className="absolute inset-0 bg-[#202b20] opacity-80"></div>
         <div className="container-custom relative z-10">
