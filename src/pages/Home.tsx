@@ -12,9 +12,9 @@ const Home = () => {
   return <div className="page-transition">
       {/* Hero Section */}
       <section className="bg-cover bg-center h-screen flex items-center relative" style={{
-      backgroundImage: "url('/lovable-uploads/1ea94a10-1e1b-48e4-b475-71b2a2eb01e3.png')"
+      backgroundImage: "url('/lovable-uploads/a08e54d9-eba2-4c0a-adc5-3ee3fb8c730e.png')"
     }}>
-        <div className="absolute inset-0 bg-[#202b20] opacity-70"></div>
+        <div className="absolute inset-0 bg-[#202b20] opacity-80"></div>
         <div className="container-custom relative z-10">
           <div className={`max-w-3xl transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}>
             <div className="mb-6 flex items-center">
