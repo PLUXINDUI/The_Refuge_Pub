@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Star, Users, Award, Clock } from 'lucide-react';
@@ -13,7 +12,7 @@ const Home = () => {
   return <div className="page-transition">
       {/* Hero Section */}
       <section className="bg-cover bg-center h-screen flex items-center relative" style={{
-      backgroundImage: "url('/lovable-uploads/72d617a1-83e2-4f0a-82e6-c12e74614b4e.png')"
+      backgroundImage: "url('/lovable-uploads/1ea94a10-1e1b-48e4-b475-71b2a2eb01e3.png')"
     }}>
         <div className="absolute inset-0 bg-[#202b20] opacity-70"></div>
         <div className="container-custom relative z-10">
