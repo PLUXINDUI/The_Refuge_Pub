@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, LogIn } from 'lucide-react';
 import { toast } from "@/components/ui/use-toast";
-import { useUsers } from "@/hooks/useDatabase";
-import { User } from "@/models/types";
+import { supabase } from "@/integrations/supabase/client";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +13,6 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { data: users = [] } = useUsers();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,33 +23,36 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Проверяем логин и пароль пользователя
-    setTimeout(() => {
-      const user = users.find((u: User) => 
-        u.email === formData.email
-      );
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
       
-      if (user) {
+      if (error) throw error;
+      
+      if (data.user) {
         toast({
           title: "Вход выполнен успешно",
           description: "Добро пожаловать в Паб «Убежище»!",
           duration: 3000,
         });
         navigate('/');
-      } else {
-        toast({
-          title: "Ошибка входа",
-          description: "Неверный email или пароль",
-          variant: "destructive",
-        });
       }
-      
+    } catch (error: any) {
+      console.error("Ошибка при входе:", error);
+      toast({
+        title: "Ошибка входа",
+        description: error.message || "Неверный email или пароль",
+        variant: "destructive",
+      });
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -106,14 +107,6 @@ const Login = () => {
                     <Eye className="h-5 w-5" />
                   )}
                 </button>
-              </div>
-              <div className="flex justify-end mt-2">
-                <Link 
-                  to="/forgot-password" 
-                  className="text-sm text-pub-green hover:underline"
-                >
-                  Забыли пароль?
-                </Link>
               </div>
             </div>
             

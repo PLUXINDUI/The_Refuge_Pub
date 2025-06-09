@@ -37,29 +37,25 @@ const Register = () => {
       return;
     }
     
-    // Создаем объект данных пользователя для сохранения в базе данных
-    const userData = {
+    // Создаем пользователя в Supabase
+    addUser.mutate({
       name: formData.name,
       email: formData.email,
-      password: formData.password, // В реальном проекте пароль должен быть хеширован
-      created_at: new Date().toISOString()
-    };
-    
-    // Добавляем пользователя в базу данных
-    addUser.mutate(userData, {
+      password: formData.password,
+    }, {
       onSuccess: () => {
         toast({
           title: "Регистрация успешна",
-          description: "Ваш аккаунт успешно создан!",
-          duration: 3000,
+          description: "Проверьте вашу почту для подтверждения аккаунта",
+          duration: 5000,
         });
         navigate('/login');
       },
-      onError: (error) => {
+      onError: (error: any) => {
         console.error("Ошибка при регистрации:", error);
         toast({
           title: "Ошибка регистрации",
-          description: "При создании вашего аккаунта произошла ошибка. Пожалуйста, попробуйте еще раз.",
+          description: error.message || "При создании вашего аккаунта произошла ошибка. Пожалуйста, попробуйте еще раз.",
           variant: "destructive",
         });
       }

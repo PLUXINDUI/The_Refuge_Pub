@@ -1,77 +1,20 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from "@/integrations/supabase/client";
 import { User, Reservation, Table } from '../models/types';
 
-// Это временная имплементация. В реальном проекте здесь были бы запросы к Supabase или другой базе данных
-const localStorageDatabase = {
-  users: () => {
-    const users = localStorage.getItem('refuge_users');
-    return users ? JSON.parse(users) : [];
-  },
-  addUser: (user: Omit<User, 'id'>) => {
-    const users = localStorageDatabase.users();
-    const newUser = {
-      ...user,
-      id: `user_${Date.now()}`,
-    };
-    localStorage.setItem('refuge_users', JSON.stringify([...users, newUser]));
-    return Promise.resolve(newUser);
-  },
-  reservations: () => {
-    const reservations = localStorage.getItem('refuge_reservations');
-    return reservations ? JSON.parse(reservations) : [];
-  },
-  addReservation: (reservation: Omit<Reservation, 'id'>) => {
-    const reservations = localStorageDatabase.reservations();
-    const newReservation = {
-      ...reservation,
-      id: `reservation_${Date.now()}`,
-    };
-    localStorage.setItem('refuge_reservations', JSON.stringify([...reservations, newReservation]));
-    
-    // Обновляем статус стола
-    localStorageDatabase.updateTable(reservation.table_id, { status: 'reserved' });
-    
-    return Promise.resolve(newReservation);
-  },
-  updateReservation: (id: string, data: Partial<Reservation>) => {
-    const reservations = localStorageDatabase.reservations();
-    const updatedReservations = reservations.map((res: Reservation) => 
-      res.id === id ? { ...res, ...data } : res
-    );
-    localStorage.setItem('refuge_reservations', JSON.stringify(updatedReservations));
-    return Promise.resolve(updatedReservations.find((res: Reservation) => res.id === id));
-  },
-  tables: () => {
-    const tables = localStorage.getItem('refuge_tables');
-    if (tables) return JSON.parse(tables);
-    
-    // Начальные данные для столов
-    const initialTables = [
-      { id: 1, name: 'Стол 1', capacity: 2, position: { x: 10, y: 10 }, status: 'available' },
-      { id: 2, name: 'Стол 2', capacity: 2, position: { x: 60, y: 10 }, status: 'available' },
-      { id: 3, name: 'Стол 3', capacity: 4, position: { x: 10, y: 50 }, status: 'available' },
-      { id: 4, name: 'Стол 4', capacity: 4, position: { x: 60, y: 50 }, status: 'available' },
-      { id: 5, name: 'Стол 5', capacity: 6, position: { x: 30, y: 80 }, status: 'available' },
-      { id: 6, name: 'Стол 6', capacity: 8, position: { x: 80, y: 80 }, status: 'available' },
-    ];
-    localStorage.setItem('refuge_tables', JSON.stringify(initialTables));
-    return initialTables;
-  },
-  updateTable: (id: number, data: Partial<Table>) => {
-    const tables = localStorageDatabase.tables();
-    const updatedTables = tables.map((table: Table) => 
-      table.id === id ? { ...table, ...data } : table
-    );
-    localStorage.setItem('refuge_tables', JSON.stringify(updatedTables));
-    return Promise.resolve(updatedTables.find((table: Table) => table.id === id));
-  }
-};
-
+// Функции для работы с пользователями
 export const useUsers = () => {
   return useQuery({
     queryKey: ['users'],
-    queryFn: () => localStorageDatabase.users(),
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*');
+      
+      if (error) throw error;
+      return data;
+    },
   });
 };
 
@@ -79,21 +22,44 @@ export const useAddUser = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: (userData: Omit<User, 'id'>) => localStorageDatabase.addUser(userData),
+    mutationFn: async (userData: { email: string; password: string; name: string }) => {
+      const { data, error } = await supabase.auth.signUp({
+        email: userData.email,
+        password: userData.password,
+        options: {
+          data: {
+            name: userData.name,
+          },
+          emailRedirectTo: `${window.location.origin}/`
+        }
+      });
+      
+      if (error) throw error;
+      return data.user;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
     },
   });
 };
 
+// Функции для работы с бронированиями
 export const useReservations = (userId?: string) => {
   return useQuery({
     queryKey: ['reservations', userId],
-    queryFn: () => {
-      const reservations = localStorageDatabase.reservations();
-      return userId 
-        ? reservations.filter((res: Reservation) => res.user_id === userId)
-        : reservations;
+    queryFn: async () => {
+      let query = supabase
+        .from('reservations')
+        .select('*');
+      
+      if (userId) {
+        query = query.eq('user_id', userId);
+      }
+      
+      const { data, error } = await query;
+      
+      if (error) throw error;
+      return data;
     },
   });
 };
@@ -102,7 +68,23 @@ export const useAddReservation = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: (reservationData: Omit<Reservation, 'id'>) => localStorageDatabase.addReservation(reservationData),
+    mutationFn: async (reservationData: Omit<Reservation, 'id' | 'created_at' | 'updated_at'>) => {
+      const { data, error } = await supabase
+        .from('reservations')
+        .insert([reservationData])
+        .select()
+        .single();
+      
+      if (error) throw error;
+      
+      // Обновляем статус стола
+      await supabase
+        .from('tables')
+        .update({ status: 'reserved' })
+        .eq('id', reservationData.table_id);
+      
+      return data;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['reservations'] });
       queryClient.invalidateQueries({ queryKey: ['tables'] });
@@ -114,18 +96,43 @@ export const useUpdateReservation = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: ({ id, data }: { id: string, data: Partial<Reservation> }) => 
-      localStorageDatabase.updateReservation(id, data),
+    mutationFn: async ({ id, data }: { id: string, data: Partial<Reservation> }) => {
+      const { data: updatedData, error } = await supabase
+        .from('reservations')
+        .update(data)
+        .eq('id', id)
+        .select()
+        .single();
+      
+      if (error) throw error;
+      return updatedData;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['reservations'] });
     },
   });
 };
 
+// Функции для работы со столами
 export const useTables = () => {
   return useQuery({
     queryKey: ['tables'],
-    queryFn: () => localStorageDatabase.tables(),
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('tables')
+        .select('*');
+      
+      if (error) throw error;
+      
+      // Преобразуем данные в нужный формат
+      return data.map(table => ({
+        id: table.id,
+        name: table.name,
+        capacity: table.capacity,
+        position: { x: table.position_x, y: table.position_y },
+        status: table.status
+      }));
+    },
   });
 };
 
@@ -133,10 +140,39 @@ export const useUpdateTable = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: ({ id, data }: { id: number, data: Partial<Table> }) => 
-      localStorageDatabase.updateTable(id, data),
+    mutationFn: async ({ id, data }: { id: number, data: Partial<Table> }) => {
+      const updateData: any = { ...data };
+      
+      // Преобразуем position обратно в position_x и position_y
+      if (data.position) {
+        updateData.position_x = data.position.x;
+        updateData.position_y = data.position.y;
+        delete updateData.position;
+      }
+      
+      const { data: updatedData, error } = await supabase
+        .from('tables')
+        .update(updateData)
+        .eq('id', id)
+        .select()
+        .single();
+      
+      if (error) throw error;
+      return updatedData;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tables'] });
+    },
+  });
+};
+
+// Функции для аутентификации
+export const useAuth = () => {
+  return useQuery({
+    queryKey: ['auth'],
+    queryFn: async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      return session;
     },
   });
 };

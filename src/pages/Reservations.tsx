@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { Calendar } from '@/components/ui/calendar';
@@ -8,10 +9,12 @@ import { Calendar as CalendarIcon, Clock, Users, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from "@/components/ui/use-toast";
 import { useTables, useAddReservation } from "@/hooks/useDatabase";
+import { supabase } from "@/integrations/supabase/client";
 import { Table } from "@/models/types";
 
 // Доступные временные слоты
 const TIME_SLOTS = ['11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30'];
+
 const Reservations = () => {
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -19,6 +22,9 @@ const Reservations = () => {
   const [partySize, setPartySize] = useState(2);
   const [note, setNote] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  
+  const navigate = useNavigate();
 
   // Получаем данные о столах из базы данных
   const {
@@ -26,11 +32,29 @@ const Reservations = () => {
     isLoading: tablesLoading
   } = useTables();
   const addReservation = useAddReservation();
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    
+    // Проверяем аутентификацию
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast({
+          title: "Необходима авторизация",
+          description: "Пожалуйста, войдите в систему для бронирования столов",
+          variant: "destructive",
+        });
+        navigate('/login');
+        return;
+      }
+      setUser(session.user);
+    };
+    
+    checkAuth();
+  }, [navigate]);
+
   const handleTableSelect = (id: number) => {
-    // Нельзя выбрать уже зарезервированный стол
     const table = tables.find((t: Table) => t.id === id);
     if (table && table.status === 'reserved') {
       toast({
@@ -42,16 +66,30 @@ const Reservations = () => {
     }
     setSelectedTable(id);
   };
+
   const handleTimeSelect = (selected: string) => {
     setTime(selected);
   };
+
   const handlePartySizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setPartySize(parseInt(e.target.value));
   };
+
   const handleNoteChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNote(e.target.value);
   };
+
   const handleSubmit = () => {
+    if (!user) {
+      toast({
+        title: "Необходима авторизация",
+        description: "Пожалуйста, войдите в систему для бронирования столов",
+        variant: "destructive"
+      });
+      navigate('/login');
+      return;
+    }
+
     if (!selectedTable || !date || !time) {
       toast({
         title: "Неполная бронь",
@@ -60,22 +98,19 @@ const Reservations = () => {
       });
       return;
     }
+
     setIsSubmitting(true);
 
-    // Создаем объект бронирования для сохранения в базу данных
     const reservationData = {
-      user_id: "guest",
-      // В реальной реализации здесь был бы ID авторизованного пользователя
+      user_id: user.id,
       table_id: selectedTable,
       date: format(date, 'yyyy-MM-dd'),
       time,
       party_size: partySize,
       note,
       status: 'confirmed' as const,
-      created_at: new Date().toISOString()
     };
 
-    // Добавляем бронирование в базу данных
     addReservation.mutate(reservationData, {
       onSuccess: () => {
         toast({
@@ -85,7 +120,6 @@ const Reservations = () => {
           })} в ${time}.`
         });
 
-        // Сброс формы
         setSelectedTable(null);
         setTime(null);
         setNote('');
@@ -102,7 +136,15 @@ const Reservations = () => {
       }
     });
   };
-  return <div className="page-transition pt-24 bg-zinc-400">
+
+  if (!user) {
+    return <div className="min-h-screen flex items-center justify-center">
+      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-pub-green"></div>
+    </div>;
+  }
+
+  return (
+    <div className="page-transition pt-24 bg-zinc-400">
       {/* Заголовок бронирования */}
       <section className="bg-menu bg-cover bg-center py-24">
         <div className="container-custom">
@@ -131,16 +173,12 @@ const Reservations = () => {
                   
                   <div className="space-y-6">
                     <div>
-                      <label className="block mb-2 text-sm font-medium">
-                        Дата
-                      </label>
+                      <label className="block mb-2 text-sm font-medium">Дата</label>
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !date && "text-muted-foreground")}>
                             <CalendarIcon className="mr-2 h-4 w-4" />
-                            {date ? format(date, "d MMMM yyyy", {
-                            locale: ru
-                          }) : <span>Выберите дату</span>}
+                            {date ? format(date, "d MMMM yyyy", {locale: ru}) : <span>Выберите дату</span>}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0 bg-white dark:bg-pub-dark" align="start">
@@ -150,35 +188,33 @@ const Reservations = () => {
                     </div>
                     
                     <div>
-                      <label className="block mb-2 text-sm font-medium">
-                        Время
-                      </label>
+                      <label className="block mb-2 text-sm font-medium">Время</label>
                       <div className="grid grid-cols-2 gap-2">
-                        {TIME_SLOTS.map(slot => <Button key={slot} variant="outline" className={cn("justify-start text-left font-normal h-9", time === slot && "bg-pub-green text-white hover:bg-pub-green hover:text-white")} onClick={() => handleTimeSelect(slot)}>
+                        {TIME_SLOTS.map(slot => 
+                          <Button key={slot} variant="outline" className={cn("justify-start text-left font-normal h-9", time === slot && "bg-pub-green text-white hover:bg-pub-green hover:text-white")} onClick={() => handleTimeSelect(slot)}>
                             <Clock className="mr-2 h-4 w-4" />
                             {slot}
-                          </Button>)}
+                          </Button>
+                        )}
                       </div>
                     </div>
                     
                     <div>
-                      <label htmlFor="partySize" className="block mb-2 text-sm font-medium">
-                        Количество гостей
-                      </label>
+                      <label htmlFor="partySize" className="block mb-2 text-sm font-medium">Количество гостей</label>
                       <div className="flex items-center">
                         <Users className="h-5 w-5 mr-2 text-pub-green" />
                         <select id="partySize" value={partySize} onChange={handlePartySizeChange} className="input-field">
-                          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => <option key={num} value={num}>
+                          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => 
+                            <option key={num} value={num}>
                               {num} {num === 1 ? 'человек' : num >= 2 && num <= 4 ? 'человека' : 'человек'}
-                            </option>)}
+                            </option>
+                          )}
                         </select>
                       </div>
                     </div>
                     
                     <div>
-                      <label htmlFor="note" className="block mb-2 text-sm font-medium">
-                        Особые пожелания (необязательно)
-                      </label>
+                      <label htmlFor="note" className="block mb-2 text-sm font-medium">Особые пожелания (необязательно)</label>
                       <textarea id="note" value={note} onChange={handleNoteChange} rows={3} className="input-field resize-none" placeholder="Особые пожелания или диетические требования?"></textarea>
                     </div>
                   </div>
@@ -215,19 +251,29 @@ const Reservations = () => {
                     
                     {/* Столы */}
                     <div className="mt-32 grid grid-cols-3 gap-8">
-                      {tablesLoading ? <div className="col-span-3 text-center py-12">Загрузка столов...</div> : tables.map((table: Table) => <div key={table.id} className={cn("aspect-square rounded-lg border-2 flex flex-col items-center justify-center cursor-pointer transition-all duration-300", table.status === 'available' ? "bg-green-500/10 border-green-500/30 hover:border-green-500" : "bg-red-500/10 border-red-500/30", selectedTable === table.id && table.status === 'available' && "border-pub-green bg-pub-green/10")} onClick={() => handleTableSelect(table.id)}>
+                      {tablesLoading ? 
+                        <div className="col-span-3 text-center py-12">Загрузка столов...</div> : 
+                        tables.map((table: Table) => 
+                          <div key={table.id} className={cn("aspect-square rounded-lg border-2 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 relative", table.status === 'available' ? "bg-green-500/10 border-green-500/30 hover:border-green-500" : "bg-red-500/10 border-red-500/30", selectedTable === table.id && table.status === 'available' && "border-pub-green bg-pub-green/10")} onClick={() => handleTableSelect(table.id)}>
                             <span className="font-medium">{table.name}</span>
                             <span className="text-sm text-muted-foreground">{table.capacity} {table.capacity === 1 ? 'место' : table.capacity >= 2 && table.capacity <= 4 ? 'места' : 'мест'}</span>
-                            {selectedTable === table.id && table.status === 'available' && <div className="absolute -top-2 -right-2 bg-pub-green text-white p-1 rounded-full">
+                            {selectedTable === table.id && table.status === 'available' && 
+                              <div className="absolute -top-2 -right-2 bg-pub-green text-white p-1 rounded-full">
                                 <Check className="h-4 w-4" />
-                              </div>}
-                          </div>)}
+                              </div>
+                            }
+                          </div>
+                        )
+                      }
                     </div>
                   </div>
                   
                   <div className="flex justify-end">
                     <Button className="btn-primary" onClick={handleSubmit} disabled={!selectedTable || !date || !time || isSubmitting || addReservation.isPending}>
-                      {isSubmitting || addReservation.isPending ? <span className="animate-pulse">Обработка...</span> : "Подтвердить бронирование"}
+                      {isSubmitting || addReservation.isPending ? 
+                        <span className="animate-pulse">Обработка...</span> : 
+                        "Подтвердить бронирование"
+                      }
                     </Button>
                   </div>
                 </div>
@@ -258,6 +304,8 @@ const Reservations = () => {
           </div>
         </div>
       </section>
-    </div>;
+    </div>
+  );
 };
+
 export default Reservations;
