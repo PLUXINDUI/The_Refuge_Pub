@@ -28,10 +28,21 @@ const Register = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    console.log('Форма отправлена:', formData);
+    
     if (formData.password !== formData.confirmPassword) {
       toast({
         title: "Ошибка",
         description: "Пароли не совпадают",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      toast({
+        title: "Ошибка",
+        description: "Пароль должен содержать не менее 6 символов",
         variant: "destructive",
       });
       return;
@@ -43,19 +54,30 @@ const Register = () => {
       email: formData.email,
       password: formData.password,
     }, {
-      onSuccess: () => {
+      onSuccess: (user) => {
+        console.log('Пользователь создан:', user);
         toast({
           title: "Регистрация успешна",
-          description: "Проверьте вашу почту для подтверждения аккаунта",
+          description: "Добро пожаловать в Паб «Убежище»! Можете войти в систему.",
           duration: 5000,
         });
         navigate('/login');
       },
       onError: (error: any) => {
         console.error("Ошибка при регистрации:", error);
+        let errorMessage = "При создании вашего аккаунта произошла ошибка. Пожалуйста, попробуйте еще раз.";
+        
+        if (error.message?.includes('already registered')) {
+          errorMessage = "Пользователь с таким email уже зарегистрирован";
+        } else if (error.message?.includes('invalid email')) {
+          errorMessage = "Неверный формат email адреса";
+        } else if (error.message?.includes('password')) {
+          errorMessage = "Пароль слишком слабый";
+        }
+        
         toast({
           title: "Ошибка регистрации",
-          description: error.message || "При создании вашего аккаунта произошла ошибка. Пожалуйста, попробуйте еще раз.",
+          description: errorMessage,
           variant: "destructive",
         });
       }
@@ -117,7 +139,7 @@ const Register = () => {
                   onChange={handleChange}
                   className="input-field pr-10"
                   placeholder="••••••••"
-                  minLength={8}
+                  minLength={6}
                   required
                 />
                 <button
@@ -133,7 +155,7 @@ const Register = () => {
                 </button>
               </div>
               <p className="text-xs text-muted-foreground mt-2">
-                Пароль должен содержать не менее 8 символов
+                Пароль должен содержать не менее 6 символов
               </p>
             </div>
             

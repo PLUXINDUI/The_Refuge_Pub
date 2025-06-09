@@ -23,6 +23,8 @@ export const useAddUser = () => {
   
   return useMutation({
     mutationFn: async (userData: { email: string; password: string; name: string }) => {
+      console.log('Начинаем регистрацию пользователя:', userData.email);
+      
       const { data, error } = await supabase.auth.signUp({
         email: userData.email,
         password: userData.password,
@@ -30,16 +32,24 @@ export const useAddUser = () => {
           data: {
             name: userData.name,
           },
-          emailRedirectTo: `${window.location.origin}/`
         }
       });
       
-      if (error) throw error;
+      if (error) {
+        console.error('Ошибка при регистрации:', error);
+        throw error;
+      }
+      
+      console.log('Пользователь успешно зарегистрирован:', data.user?.id);
       return data.user;
     },
     onSuccess: () => {
+      console.log('Регистрация завершена успешно');
       queryClient.invalidateQueries({ queryKey: ['users'] });
     },
+    onError: (error) => {
+      console.error('Ошибка в мутации регистрации:', error);
+    }
   });
 };
 
@@ -69,26 +79,44 @@ export const useAddReservation = () => {
   
   return useMutation({
     mutationFn: async (reservationData: Omit<Reservation, 'id' | 'created_at' | 'updated_at'>) => {
+      console.log('Создаем бронирование:', reservationData);
+      
       const { data, error } = await supabase
         .from('reservations')
         .insert([reservationData])
         .select()
         .single();
       
-      if (error) throw error;
+      if (error) {
+        console.error('Ошибка при создании бронирования:', error);
+        throw error;
+      }
+      
+      console.log('Бронирование создано:', data);
       
       // Обновляем статус стола
-      await supabase
+      const { error: updateError } = await supabase
         .from('tables')
         .update({ status: 'reserved' })
         .eq('id', reservationData.table_id);
       
+      if (updateError) {
+        console.error('Ошибка при обновлении статуса стола:', updateError);
+        // Не выбрасываем ошибку, так как бронирование уже создано
+      } else {
+        console.log('Статус стола обновлен на reserved');
+      }
+      
       return data;
     },
     onSuccess: () => {
+      console.log('Бронирование успешно завершено');
       queryClient.invalidateQueries({ queryKey: ['reservations'] });
       queryClient.invalidateQueries({ queryKey: ['tables'] });
     },
+    onError: (error) => {
+      console.error('Ошибка в мутации бронирования:', error);
+    }
   });
 };
 

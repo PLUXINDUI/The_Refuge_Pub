@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
@@ -38,7 +39,10 @@ const Reservations = () => {
     
     // Проверяем аутентификацию
     const checkAuth = async () => {
+      console.log('Проверяем аутентификацию...');
       const { data: { session } } = await supabase.auth.getSession();
+      console.log('Текущая сессия:', session);
+      
       if (!session) {
         toast({
           title: "Необходима авторизация",
@@ -49,6 +53,7 @@ const Reservations = () => {
         return;
       }
       setUser(session.user);
+      console.log('Пользователь авторизован:', session.user.id);
     };
     
     checkAuth();
@@ -64,15 +69,19 @@ const Reservations = () => {
       });
       return;
     }
+    console.log('Выбран стол:', id);
     setSelectedTable(id);
   };
 
   const handleTimeSelect = (selected: string) => {
+    console.log('Выбрано время:', selected);
     setTime(selected);
   };
 
   const handlePartySizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPartySize(parseInt(e.target.value));
+    const size = parseInt(e.target.value);
+    console.log('Выбрано количество гостей:', size);
+    setPartySize(size);
   };
 
   const handleNoteChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -80,6 +89,12 @@ const Reservations = () => {
   };
 
   const handleSubmit = () => {
+    console.log('Начинаем процесс бронирования...');
+    console.log('Пользователь:', user);
+    console.log('Выбранный стол:', selectedTable);
+    console.log('Дата:', date);
+    console.log('Время:', time);
+    
     if (!user) {
       toast({
         title: "Необходима авторизация",
@@ -107,12 +122,15 @@ const Reservations = () => {
       date: format(date, 'yyyy-MM-dd'),
       time,
       party_size: partySize,
-      note,
+      note: note || null,
       status: 'confirmed' as const,
     };
 
+    console.log('Данные для бронирования:', reservationData);
+
     addReservation.mutate(reservationData, {
-      onSuccess: () => {
+      onSuccess: (data) => {
+        console.log('Бронирование успешно создано:', data);
         toast({
           title: "Бронирование подтверждено!",
           description: `Ваш стол зарезервирован на ${format(date, 'd MMMM yyyy', {
@@ -125,11 +143,20 @@ const Reservations = () => {
         setNote('');
         setIsSubmitting(false);
       },
-      onError: error => {
+      onError: (error: any) => {
         console.error("Ошибка при бронировании:", error);
+        
+        let errorMessage = "Произошла ошибка при бронировании стола. Пожалуйста, попробуйте еще раз.";
+        
+        if (error.message?.includes('violates row-level security')) {
+          errorMessage = "Ошибка доступа к данным. Проверьте авторизацию.";
+        } else if (error.message?.includes('foreign key')) {
+          errorMessage = "Выбранный стол недоступен.";
+        }
+        
         toast({
           title: "Ошибка бронирования",
-          description: "Произошла ошибка при бронировании стола. Пожалуйста, попробуйте еще раз.",
+          description: errorMessage,
           variant: "destructive"
         });
         setIsSubmitting(false);
