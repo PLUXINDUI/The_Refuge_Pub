@@ -39,7 +39,7 @@ const Contact = () => {
       setIsSubmitting(false);
     }, 1500);
   };
-  return <div className="page-transition pt-24 bg-zinc-400">
+  return <div className="page-transition pt-24 bg-pub-light">
       {/* Contact Hero */}
       <section className="bg-hero bg-cover bg-center py-24">
         <div className="container-custom">
@@ -181,7 +181,7 @@ const Contact = () => {
       </section>
 
       {/* Map Section */}
-      <section className="section-padding bg-zinc-400">
+      <section className="section-padding bg-pub-light">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-up">
             <div className="flex items-center justify-center mb-4">

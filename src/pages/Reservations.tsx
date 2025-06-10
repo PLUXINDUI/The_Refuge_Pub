@@ -179,7 +179,7 @@ const Reservations = () => {
   // Если пользователь не авторизован, показываем сообщение
   if (!authLoading && !user) {
     return (
-      <div className="page-transition pt-24 bg-zinc-400">
+      <div className="page-transition pt-24 bg-pub-light">
         {/* Заголовок бронирования */}
         <section className="bg-menu bg-cover bg-center py-24">
           <div className="container-custom">
@@ -195,7 +195,7 @@ const Reservations = () => {
         </section>
 
         {/* Сообщение о необходимости авторизации */}
-        <section className="section-padding bg-zinc-400">
+        <section className="section-padding bg-pub-light">
           <div className="container-custom">
             <div className="max-w-md mx-auto text-center">
               <div className="bg-white dark:bg-gray-900 rounded-xl shadow-xl p-8 border border-pub-green/20">
@@ -239,7 +239,7 @@ const Reservations = () => {
   };
 
   return (
-    <div className="page-transition pt-24 bg-zinc-400">
+    <div className="page-transition pt-24 bg-pub-light">
       {/* Заголовок бронирования */}
       <section className="bg-menu bg-cover bg-center py-24">
         <div className="container-custom">
@@ -255,7 +255,7 @@ const Reservations = () => {
       </section>
 
       {/* Секция формы бронирования */}
-      <section className="section-padding bg-zinc-400">
+      <section className="section-padding bg-pub-light">
         <div className="container-custom">
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -263,7 +263,7 @@ const Reservations = () => {
               <div className="md:col-span-1 animate-fade-up" style={{
               animationDelay: '0.2s'
             }}>
-                <div className="rounded-xl shadow-lg p-6 border border-border sticky top-24 bg-zinc-400">
+                <div className="rounded-xl shadow-lg p-6 border border-border sticky top-24 bg-pub-light">
                   <h2 className="text-2xl font-playfair font-semibold mb-6">Детали бронирования</h2>
                   
                   <div className="space-y-6">
@@ -331,7 +331,7 @@ const Reservations = () => {
               <div className="md:col-span-2 animate-fade-up" style={{
               animationDelay: '0.4s'
             }}>
-                <div className="rounded-xl shadow-lg p-6 border border-border mb-8 bg-zinc-400">
+                <div className="rounded-xl shadow-lg p-6 border border-border mb-8 bg-pub-light">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-2xl font-playfair font-semibold">Выберите стол</h2>
                     <div className="flex items-center space-x-4">
@@ -355,7 +355,7 @@ const Reservations = () => {
                   )}
                   
                   {/* Карта столов */}
-                  <div className="border border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 mb-6 relative min-h-[400px] bg-zinc-400">
+                  <div className="border border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 mb-6 relative min-h-[400px] bg-pub-light">
                     {/* Барная стойка */}
                     <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-3/4 h-16 bg-pub-wood rounded-lg flex items-center justify-center">
                       <span className="text-white font-medium">Бар</span>

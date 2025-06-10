@@ -1,11 +1,10 @@
-
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 const Menu = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  return <div className="page-transition pt-24 bg-zinc-400">
+  return <div className="page-transition pt-24 bg-pub-light">
       {/* Menu Hero */}
       <section className="bg-menu bg-cover bg-center py-24">
         <div className="container-custom">
@@ -95,7 +94,7 @@ const Menu = () => {
       </section>
 
       {/* Main Courses Section */}
-      <section id="mains" className="section-padding bg-zinc-400">
+      <section id="mains" className="section-padding bg-pub-light">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
             <div className="mb-12 animate-fade-up">
@@ -223,8 +222,8 @@ const Menu = () => {
       </section>
 
       {/* Beers Section */}
-      <section id="beers" className="section-padding bg-zinc-400">
-        <div className="container-custom bg-zinc-400">
+      <section id="beers" className="section-padding bg-pub-light">
+        <div className="container-custom bg-pub-light">
           <div className="max-w-4xl mx-auto">
             <div className="mb-12 animate-fade-up">
               <div className="flex items-center mb-4">
@@ -375,7 +374,7 @@ const Menu = () => {
       </section>
 
       {/* Wines Section */}
-      <section id="wines" className="section-padding bg-zinc-400">
+      <section id="wines" className="section-padding bg-pub-light">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
             <div className="mb-12 animate-fade-up">
