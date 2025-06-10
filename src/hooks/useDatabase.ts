@@ -74,97 +74,12 @@ export const useReservations = (userId?: string) => {
   });
 };
 
-// Новая функция для проверки доступности стола в определенное время и дату
-export const useTableAvailability = (date?: string, time?: string) => {
-  return useQuery({
-    queryKey: ['table-availability', date, time],
-    queryFn: async () => {
-      if (!date || !time) return [];
-      
-      console.log('Проверяем доступность столов для:', date, time);
-      
-      // Парсим время и создаем временной интервал (1 час)
-      const [hours, minutes] = time.split(':').map(Number);
-      const startTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-      const endTime = `${(hours + 1).toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-      
-      console.log('Проверяем интервал с', startTime, 'до', endTime);
-      
-      // Получаем все бронирования на эту дату
-      const { data: existingReservations, error } = await supabase
-        .from('reservations')
-        .select('table_id, time')
-        .eq('date', date)
-        .eq('status', 'confirmed');
-      
-      if (error) {
-        console.error('Ошибка при получении бронирований:', error);
-        throw error;
-      }
-      
-      console.log('Существующие бронирования на', date, ':', existingReservations);
-      
-      // Проверяем пересечения по времени для каждого бронирования
-      const unavailableTableIds = new Set();
-      
-      existingReservations?.forEach(reservation => {
-        const [resHours, resMinutes] = reservation.time.split(':').map(Number);
-        const resStartTime = resHours * 60 + resMinutes;
-        const resEndTime = resStartTime + 60; // 1 час
-        
-        const reqStartTime = hours * 60 + minutes;
-        const reqEndTime = reqStartTime + 60; // 1 час
-        
-        // Проверяем пересечение временных интервалов
-        if (!(reqEndTime <= resStartTime || reqStartTime >= resEndTime)) {
-          console.log(`Стол ${reservation.table_id} недоступен из-за пересечения времени`);
-          unavailableTableIds.add(reservation.table_id);
-        }
-      });
-      
-      console.log('Недоступные столы:', Array.from(unavailableTableIds));
-      return Array.from(unavailableTableIds);
-    },
-    enabled: Boolean(date && time),
-  });
-};
-
 export const useAddReservation = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
     mutationFn: async (reservationData: Omit<Reservation, 'id' | 'created_at' | 'updated_at'>) => {
       console.log('Создаем бронирование:', reservationData);
-      
-      // Проверяем доступность стола перед созданием бронирования
-      const [hours, minutes] = reservationData.time.split(':').map(Number);
-      const startTime = hours * 60 + minutes;
-      const endTime = startTime + 60;
-      
-      const { data: conflictingReservations, error: checkError } = await supabase
-        .from('reservations')
-        .select('*')
-        .eq('table_id', reservationData.table_id)
-        .eq('date', reservationData.date)
-        .eq('status', 'confirmed');
-      
-      if (checkError) {
-        console.error('Ошибка при проверке конфликтов:', checkError);
-        throw checkError;
-      }
-      
-      // Проверяем временные конфликты
-      const hasTimeConflict = conflictingReservations?.some(existing => {
-        const [existingHours, existingMinutes] = existing.time.split(':').map(Number);
-        const existingStartTime = existingHours * 60 + existingMinutes;
-        const existingEndTime = existingStartTime + 60;
-        
-        return !(endTime <= existingStartTime || startTime >= existingEndTime);
-      });
-      
-      if (hasTimeConflict) {
-        throw new Error('Этот стол уже забронирован на выбранное время');
-      }
       
       const { data, error } = await supabase
         .from('reservations')
@@ -178,13 +93,26 @@ export const useAddReservation = () => {
       }
       
       console.log('Бронирование создано:', data);
+      
+      // Обновляем статус стола
+      const { error: updateError } = await supabase
+        .from('tables')
+        .update({ status: 'reserved' })
+        .eq('id', reservationData.table_id);
+      
+      if (updateError) {
+        console.error('Ошибка при обновлении статуса стола:', updateError);
+        // Не выбрасываем ошибку, так как бронирование уже создано
+      } else {
+        console.log('Статус стола обновлен на reserved');
+      }
+      
       return data;
     },
     onSuccess: () => {
       console.log('Бронирование успешно завершено');
       queryClient.invalidateQueries({ queryKey: ['reservations'] });
       queryClient.invalidateQueries({ queryKey: ['tables'] });
-      queryClient.invalidateQueries({ queryKey: ['table-availability'] });
     },
     onError: (error) => {
       console.error('Ошибка в мутации бронирования:', error);
@@ -209,7 +137,6 @@ export const useUpdateReservation = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['reservations'] });
-      queryClient.invalidateQueries({ queryKey: ['table-availability'] });
     },
   });
 };
@@ -231,7 +158,7 @@ export const useTables = () => {
         name: table.name,
         capacity: table.capacity,
         position: { x: table.position_x, y: table.position_y },
-        status: 'available' // Всегда показываем столы как доступные, проверка будет по времени
+        status: table.status
       }));
     },
   });
