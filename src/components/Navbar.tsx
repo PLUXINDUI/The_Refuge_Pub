@@ -8,6 +8,7 @@ import { toast } from "@/components/ui/use-toast";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const location = useLocation();
   const { user, signOut, loading } = useAuth();
   
@@ -33,6 +34,9 @@ const Navbar = () => {
   };
 
   const handleSignOut = async () => {
+    if (isSigningOut) return; // Предотвращаем повторные вызовы
+    
+    setIsSigningOut(true);
     try {
       await signOut();
       toast({
@@ -45,6 +49,8 @@ const Navbar = () => {
         description: "Произошла ошибка при выходе из системы",
         variant: "destructive",
       });
+    } finally {
+      setIsSigningOut(false);
     }
   };
 
@@ -95,10 +101,11 @@ const Navbar = () => {
                 </div>
                 <button
                   onClick={handleSignOut}
-                  className="nav-link text-white flex items-center"
+                  disabled={isSigningOut}
+                  className="nav-link text-white flex items-center disabled:opacity-50"
                 >
                   <LogOut className="h-4 w-4 mr-1" />
-                  Выход
+                  {isSigningOut ? 'Выходим...' : 'Выход'}
                 </button>
               </div>
             ) : (
@@ -166,10 +173,11 @@ const Navbar = () => {
                       handleSignOut();
                       setIsMenuOpen(false);
                     }}
-                    className="text-white hover:text-pub-green flex items-center"
+                    disabled={isSigningOut}
+                    className="text-white hover:text-pub-green flex items-center disabled:opacity-50"
                   >
                     <LogOut className="h-4 w-4 mr-1" />
-                    Выход
+                    {isSigningOut ? 'Выходим...' : 'Выход'}
                   </button>
                 </>
               ) : (

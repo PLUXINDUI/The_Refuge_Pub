@@ -35,21 +35,35 @@ export const useAuth = () => {
   const signOut = async () => {
     console.log('Выход из системы...');
     try {
-      const { error } = await supabase.auth.signOut();
+      // Сначала очищаем локальное состояние
+      setSession(null);
+      setUser(null);
+      
+      // Выходим из Supabase
+      const { error } = await supabase.auth.signOut({ scope: 'global' });
       if (error) {
         console.error('Ошибка при выходе:', error);
         throw error;
       }
+      
       console.log('Успешный выход из системы');
       
-      // Принудительно обновляем состояние
-      setSession(null);
-      setUser(null);
+      // Очищаем localStorage от всех ключей аутентификации
+      Object.keys(localStorage).forEach((key) => {
+        if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
+          localStorage.removeItem(key);
+        }
+      });
       
-      // Перенаправляем на главную страницу
-      window.location.href = '/';
+      // Принудительно перезагружаем страницу для полной очистки состояния
+      window.location.reload();
     } catch (error) {
       console.error('Ошибка выхода:', error);
+      // Даже если произошла ошибка, очищаем состояние локально
+      setSession(null);
+      setUser(null);
+      localStorage.clear();
+      window.location.reload();
     }
   };
 
