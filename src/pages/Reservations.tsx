@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
@@ -9,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar as CalendarIcon, Clock, Users, Check, LogIn } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from "@/components/ui/use-toast";
-import { useTables, useAddReservation } from "@/hooks/useDatabase";
+import { useTables, useAddReservation, useTableAvailability } from "@/hooks/useDatabase";
 import { useAuth } from "@/hooks/useAuth";
 import { Table } from "@/models/types";
 
@@ -32,6 +31,16 @@ const Reservations = () => {
     data: tables = [],
     isLoading: tablesLoading
   } = useTables();
+
+  // Получаем информацию о недоступных столах для выбранной даты и времени
+  const {
+    data: unavailableTableIds = [],
+    isLoading: availabilityLoading
+  } = useTableAvailability(
+    date ? format(date, 'yyyy-MM-dd') : undefined,
+    time || undefined
+  );
+
   const addReservation = useAddReservation();
 
   useEffect(() => {
@@ -49,15 +58,16 @@ const Reservations = () => {
       return;
     }
 
-    const table = tables.find((t: Table) => t.id === id);
-    if (table && table.status === 'reserved') {
+    // Проверяем, доступен ли стол в выбранное время
+    if (time && unavailableTableIds.includes(id)) {
       toast({
         title: "Стол недоступен",
-        description: `${table.name} уже зарезервирован на это время.`,
+        description: "Этот стол уже забронирован на выбранное время (с учетом часового интервала).",
         variant: "destructive"
       });
       return;
     }
+
     console.log('Выбран стол:', id);
     setSelectedTable(id);
   };
@@ -74,6 +84,8 @@ const Reservations = () => {
     }
     console.log('Выбрано время:', selected);
     setTime(selected);
+    // Сбрасываем выбранный стол при смене времени
+    setSelectedTable(null);
   };
 
   const handlePartySizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -133,7 +145,7 @@ const Reservations = () => {
           title: "Бронирование подтверждено!",
           description: `Ваш стол зарезервирован на ${format(date, 'd MMMM yyyy', {
             locale: ru
-          })} в ${time}.`
+          })} в ${time} (на 1 час).`
         });
 
         setSelectedTable(null);
@@ -146,7 +158,9 @@ const Reservations = () => {
         
         let errorMessage = "Произошла ошибка при бронировании стола. Пожалуйста, попробуйте еще раз.";
         
-        if (error.message?.includes('violates row-level security')) {
+        if (error.message?.includes('уже забронирован')) {
+          errorMessage = error.message;
+        } else if (error.message?.includes('violates row-level security')) {
           errorMessage = "Ошибка доступа к данным. Проверьте авторизацию.";
         } else if (error.message?.includes('foreign key')) {
           errorMessage = "Выбранный стол недоступен.";
@@ -219,6 +233,11 @@ const Reservations = () => {
     </div>;
   }
 
+  const getTableStatus = (tableId: number) => {
+    if (!time) return 'available';
+    return unavailableTableIds.includes(tableId) ? 'reserved' : 'available';
+  };
+
   return (
     <div className="page-transition pt-24 bg-zinc-400">
       {/* Заголовок бронирования */}
@@ -258,7 +277,18 @@ const Reservations = () => {
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0 bg-white dark:bg-pub-dark" align="start">
-                          <Calendar mode="single" selected={date} onSelect={setDate} initialFocus disabled={date => date < new Date()} className={cn("p-3 pointer-events-auto")} locale={ru} />
+                          <Calendar 
+                            mode="single" 
+                            selected={date} 
+                            onSelect={(newDate) => {
+                              setDate(newDate);
+                              setSelectedTable(null); // Сбрасываем выбранный стол при смене даты
+                            }} 
+                            initialFocus 
+                            disabled={date => date < new Date()} 
+                            className={cn("p-3 pointer-events-auto")} 
+                            locale={ru} 
+                          />
                         </PopoverContent>
                       </Popover>
                     </div>
@@ -316,10 +346,16 @@ const Reservations = () => {
                     </div>
                   </div>
                   
+                  {!time && (
+                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+                      <p className="text-sm text-amber-800">
+                        Пожалуйста, сначала выберите время, чтобы увидеть доступность столов.
+                      </p>
+                    </div>
+                  )}
+                  
                   {/* Карта столов */}
                   <div className="border border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 mb-6 relative min-h-[400px] bg-zinc-400">
-                    
-                    
                     {/* Барная стойка */}
                     <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-3/4 h-16 bg-pub-wood rounded-lg flex items-center justify-center">
                       <span className="text-white font-medium">Бар</span>
@@ -327,19 +363,30 @@ const Reservations = () => {
                     
                     {/* Столы */}
                     <div className="mt-32 grid grid-cols-3 gap-8">
-                      {tablesLoading ? 
+                      {tablesLoading || availabilityLoading ? 
                         <div className="col-span-3 text-center py-12">Загрузка столов...</div> : 
-                        tables.map((table: Table) => 
-                          <div key={table.id} className={cn("aspect-square rounded-lg border-2 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 relative", table.status === 'available' ? "bg-green-500/10 border-green-500/30 hover:border-green-500" : "bg-red-500/10 border-red-500/30", selectedTable === table.id && table.status === 'available' && "border-pub-green bg-pub-green/10")} onClick={() => handleTableSelect(table.id)}>
-                            <span className="font-medium">{table.name}</span>
-                            <span className="text-sm text-muted-foreground">{table.capacity} {table.capacity === 1 ? 'место' : table.capacity >= 2 && table.capacity <= 4 ? 'места' : 'мест'}</span>
-                            {selectedTable === table.id && table.status === 'available' && 
-                              <div className="absolute -top-2 -right-2 bg-pub-green text-white p-1 rounded-full">
-                                <Check className="h-4 w-4" />
-                              </div>
-                            }
-                          </div>
-                        )
+                        tables.map((table: Table) => {
+                          const tableStatus = getTableStatus(table.id);
+                          return (
+                            <div 
+                              key={table.id} 
+                              className={cn(
+                                "aspect-square rounded-lg border-2 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 relative", 
+                                tableStatus === 'available' ? "bg-green-500/10 border-green-500/30 hover:border-green-500" : "bg-red-500/10 border-red-500/30 cursor-not-allowed", 
+                                selectedTable === table.id && tableStatus === 'available' && "border-pub-green bg-pub-green/10"
+                              )} 
+                              onClick={() => handleTableSelect(table.id)}
+                            >
+                              <span className="font-medium">{table.name}</span>
+                              <span className="text-sm text-muted-foreground">{table.capacity} {table.capacity === 1 ? 'место' : table.capacity >= 2 && table.capacity <= 4 ? 'места' : 'мест'}</span>
+                              {selectedTable === table.id && tableStatus === 'available' && 
+                                <div className="absolute -top-2 -right-2 bg-pub-green text-white p-1 rounded-full">
+                                  <Check className="h-4 w-4" />
+                                </div>
+                              }
+                            </div>
+                          );
+                        })
                       }
                     </div>
                   </div>
@@ -363,11 +410,11 @@ const Reservations = () => {
                     </li>
                     <li className="flex items-start">
                       <span className="bg-pub-green text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">2</span>
-                      <span>Для групп более 10 человек, пожалуйста, позвоните нам по телефону +7 926 533-29-93.</span>
+                      <span>Каждое бронирование действует в течение 1 часа с выбранного времени.</span>
                     </li>
                     <li className="flex items-start">
                       <span className="bg-pub-green text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">3</span>
-                      <span>Ваш стол будет зарезервирован на 15 минут после указанного времени.</span>
+                      <span>Для групп более 10 человек, пожалуйста, позвоните нам по телефону +7 926 533-29-93.</span>
                     </li>
                     <li className="flex items-start">
                       <span className="bg-pub-green text-white rounded-full h-5 w-5 flex items-center justify-center text-xs mr-2 mt-0.5">4</span>
