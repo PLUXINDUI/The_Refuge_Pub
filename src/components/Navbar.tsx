@@ -48,9 +48,14 @@ const Navbar = () => {
     }
   };
 
+  // Проверяем, находимся ли мы на главной странице
+  const isHomePage = location.pathname === '/';
+
   return (
     <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-pub-dark/90 backdrop-blur-md py-3 shadow-lg' : 'bg-transparent py-5'
+      isScrolled || !isHomePage 
+        ? 'bg-pub-dark/95 backdrop-blur-md py-3 shadow-lg' 
+        : 'bg-transparent py-5'
     }`}>
       <div className="container-custom flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2">
