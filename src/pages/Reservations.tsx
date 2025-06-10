@@ -6,11 +6,11 @@ import { ru } from 'date-fns/locale';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
-import { Calendar as CalendarIcon, Clock, Users, Check } from 'lucide-react';
+import { Calendar as CalendarIcon, Clock, Users, Check, LogIn } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from "@/components/ui/use-toast";
 import { useTables, useAddReservation } from "@/hooks/useDatabase";
-import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import { Table } from "@/models/types";
 
 // Доступные временные слоты
@@ -23,9 +23,9 @@ const Reservations = () => {
   const [partySize, setPartySize] = useState(2);
   const [note, setNote] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [user, setUser] = useState<any>(null);
   
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
 
   // Получаем данные о столах из базы данных
   const {
@@ -36,30 +36,19 @@ const Reservations = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    
-    // Проверяем аутентификацию
-    const checkAuth = async () => {
-      console.log('Проверяем аутентификацию...');
-      const { data: { session } } = await supabase.auth.getSession();
-      console.log('Текущая сессия:', session);
-      
-      if (!session) {
-        toast({
-          title: "Необходима авторизация",
-          description: "Пожалуйста, войдите в систему для бронирования столов",
-          variant: "destructive",
-        });
-        navigate('/login');
-        return;
-      }
-      setUser(session.user);
-      console.log('Пользователь авторизован:', session.user.id);
-    };
-    
-    checkAuth();
-  }, [navigate]);
+  }, []);
 
   const handleTableSelect = (id: number) => {
+    if (!user) {
+      toast({
+        title: "Необходима авторизация",
+        description: "Пожалуйста, войдите в систему для бронирования столов",
+        variant: "destructive",
+      });
+      navigate('/login');
+      return;
+    }
+
     const table = tables.find((t: Table) => t.id === id);
     if (table && table.status === 'reserved') {
       toast({
@@ -74,6 +63,15 @@ const Reservations = () => {
   };
 
   const handleTimeSelect = (selected: string) => {
+    if (!user) {
+      toast({
+        title: "Необходима авторизация",
+        description: "Пожалуйста, войдите в систему для бронирования столов",
+        variant: "destructive",
+      });
+      navigate('/login');
+      return;
+    }
     console.log('Выбрано время:', selected);
     setTime(selected);
   };
@@ -164,7 +162,58 @@ const Reservations = () => {
     });
   };
 
-  if (!user) {
+  // Если пользователь не авторизован, показываем сообщение
+  if (!authLoading && !user) {
+    return (
+      <div className="page-transition pt-24 bg-zinc-400">
+        {/* Заголовок бронирования */}
+        <section className="bg-menu bg-cover bg-center py-24">
+          <div className="container-custom">
+            <div className="max-w-3xl mx-auto text-center animate-fade-up">
+              <h1 className="heading-xl text-white mb-6">
+                Забронировать <span className="text-pub-green">Стол</span>
+              </h1>
+              <p className="text-gray-300 text-lg mb-8">
+                Закрепите за собой место в пабе "Убежище" для незабываемого ужина.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Сообщение о необходимости авторизации */}
+        <section className="section-padding bg-zinc-400">
+          <div className="container-custom">
+            <div className="max-w-md mx-auto text-center">
+              <div className="bg-white dark:bg-gray-900 rounded-xl shadow-xl p-8 border border-pub-green/20">
+                <LogIn className="h-16 w-16 text-pub-green mx-auto mb-6" />
+                <h2 className="text-2xl font-playfair font-bold mb-4">Необходима авторизация</h2>
+                <p className="text-muted-foreground mb-6">
+                  Для бронирования столов необходимо войти в систему или зарегистрироваться.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button 
+                    onClick={() => navigate('/login')}
+                    className="btn-primary flex-1"
+                  >
+                    Войти
+                  </Button>
+                  <Button 
+                    onClick={() => navigate('/register')}
+                    variant="outline"
+                    className="flex-1"
+                  >
+                    Регистрация
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (authLoading) {
     return <div className="min-h-screen flex items-center justify-center">
       <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-pub-green"></div>
     </div>;
